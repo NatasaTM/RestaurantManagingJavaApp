@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
@@ -110,7 +111,8 @@ public class MenuItemDeleteUpdateFormController {
         txtError.setText("");
         
         try {
-            deleteMenuItem(menuItem);
+          deleteMenuItem(menuItem);
+            
             txtError.setForeground(Color.black);
             txtError.setText("Jelo je uspesno obrisano.");
             txtId.setText("");
@@ -120,13 +122,20 @@ public class MenuItemDeleteUpdateFormController {
             comboCategory.setSelectedIndex(-1);
         } catch (Exception ex) {
             txtError.setText(ex.getMessage());
+            JOptionPane.showMessageDialog(txtDescription, ex.getMessage());
         }
     }
     
-    public static void deleteMenuItem(MenuItem menuItem) throws Exception {
+    public static Response deleteMenuItem(MenuItem menuItem) throws Exception {
         Request request = new Request(Operation.MENU_ITEM_DELETE, menuItem);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if(response.getException()==null){
+            return null;
+        }else{
+            throw new Exception(response.getException().getMessage());
+        }
+        
     }
     
 }
