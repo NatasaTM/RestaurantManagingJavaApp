@@ -245,7 +245,7 @@ public class MenuRepositoryImpl implements MenuRepository {
             
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Greska pri izvrsenju metode delete() klase MenuRepository ");
+            throw new Exception("Greska pri izvrsenju metode delete() klase MenuRepository " + e.getMessage());
         }
        
        

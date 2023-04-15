@@ -341,4 +341,10 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
         MenuUpdateDeleteFormController.populateComboMenu(comboMenu, menu);
 
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
+    
+    
 }
