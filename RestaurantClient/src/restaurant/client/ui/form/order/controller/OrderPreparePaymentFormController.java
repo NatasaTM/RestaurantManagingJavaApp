@@ -82,7 +82,7 @@ public class OrderPreparePaymentFormController {
         try {
 
             List<Order> orders = getOrdersByCondition(orderPreparePaymentForm, comboTable);
-          // List<Order> orders = findByCondition(null, true, false, orderPreparePaymentForm.getEmployee(), orderPreparePaymentForm.getTable());
+            // List<Order> orders = findByCondition(null, true, false, orderPreparePaymentForm.getEmployee(), orderPreparePaymentForm.getTable());
             tblOrder.setModel(new OrderTableModel(orders));
 
         } catch (Exception ex) {
@@ -262,19 +262,17 @@ public class OrderPreparePaymentFormController {
     public static void btnSubmitActionPerformed(OrderPreparePaymentForm orderPreparePaymentForm) {
         boolean isValid = true;
         List<Order> orders = orderPreparePaymentForm.getOrders();
-        if(orders==null || orders.isEmpty()){
+        if (orders == null || orders.isEmpty()) {
             isValid = false;
         }
         BigDecimal total = calculateTotalPrice(orders, orderPreparePaymentForm);
         Receipt receipt = new Receipt(LocalDateTime.now(), total, orders);
-        if (total.compareTo(BigDecimal.valueOf(0)) <=0) {
+        if (total.compareTo(BigDecimal.valueOf(0)) <= 0) {
             JOptionPane.showMessageDialog(null, "Racun je prazan!!", "error", JOptionPane.ERROR_MESSAGE);
-            isValid=false;
+            isValid = false;
         }
-//        if (!areOrdersReady(orders)) {
-//            JOptionPane.showMessageDialog(null, "Porudzbine nisu spremne za placanje!", "error", JOptionPane.ERROR_MESSAGE);
-//        } 
-        if(isValid){
+
+        if (isValid) {
             try {
                 receipt = addReceipt(receipt);
                 System.out.println("Racun broj: " + receipt.getId());
@@ -284,11 +282,8 @@ public class OrderPreparePaymentFormController {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-            
-        }
-            
 
-        
+        }
 
     }
 

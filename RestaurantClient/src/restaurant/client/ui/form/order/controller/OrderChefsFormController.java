@@ -34,7 +34,7 @@ import restaurant.common.transfer.Response;
  */
 public class OrderChefsFormController {
 
-    public static void prepareView(JDialog orderCreateForm,OrderChefsForm orderChefsForm) {
+    public static void prepareView(JDialog orderCreateForm, OrderChefsForm orderChefsForm) {
         User user = ApplicationSession.getInstance().getLoginUser();
         orderCreateForm.setTitle("KUHINJA - Ulogovani ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
         JTable table = orderChefsForm.getTblOrderItems();
@@ -83,7 +83,7 @@ public class OrderChefsFormController {
 
     public static List<Order> findByCondition(LocalDate date, Boolean statusReady, Boolean statusPaied, Employee employee, Table table) throws Exception {
         List<Object> arguments = new ArrayList<>();
-         date = null;
+        date = null;
         arguments.add(date);
         arguments.add(statusReady);
         arguments.add(statusPaied);
@@ -139,15 +139,6 @@ public class OrderChefsFormController {
                 .collect(Collectors.toList());
         table.setModel(new OrderItemChefTableModel(filteredOrderItems, order));
 
-//        try {
-//            
-//          List<OrderItem>  orderItems = findOrderItemsByQuery(order, MenuItemType.FOOD, false);
-//            
-//            System.out.println(orderItems);
-//             table.setModel(new OrderItemChefTableModel(orderItems,order));
-//        } catch (Exception ex) {
-//            Logger.getLogger(OrderChefsFormController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     public static void updateOrder(Order order) throws Exception {
@@ -243,9 +234,14 @@ public class OrderChefsFormController {
         }
     }
 
-    public static void updateOrderItem(OrderItem orderItem) throws Exception {
+    public static Response updateOrderItem(OrderItem orderItem) throws Exception {
         Request request = new Request(Operation.ORDERITEM_UPDATE, orderItem);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

@@ -3,8 +3,6 @@ package restaurant.client.ui.form.Menu.controller;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,8 +14,6 @@ import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.MenuItemTableModel;
-import static restaurant.client.ui.form.Menu.controller.MenuSearchFormController.menuGetAll;
-import restaurant.client.ui.form.menuItem.controller.MenuItemSearchFormController;
 import restaurant.common.domain.Menu;
 import restaurant.common.domain.MenuItem;
 import restaurant.common.domain.User;
@@ -50,7 +46,7 @@ public class MenuUpdateDeleteFormController {
 
     public static void populateComboMenuItems(JComboBox comboMenuItems) {
         try {
-            comboMenuItems.setModel(new DefaultComboBoxModel<>(MenuItemSearchFormController.getAllMenuItems().toArray()));
+            comboMenuItems.setModel(new DefaultComboBoxModel<>(getAllMenuItems().toArray()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -88,7 +84,6 @@ public class MenuUpdateDeleteFormController {
 
         User user = ApplicationSession.getInstance().getLoginUser();
         menuUDForm.setTitle("Ulogovani ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
-        // populateComboMenu(comboMenu, menu);
 
         if (menu == null || menu.getName() == null) {
             txtMenuName.setText("");
@@ -102,7 +97,6 @@ public class MenuUpdateDeleteFormController {
             }
         }
 
-        //  setTableModel(menu, tblMenuItems);
     }
 
     public static void setMenu(Menu menu) {
@@ -148,10 +142,15 @@ public class MenuUpdateDeleteFormController {
         }
     }
 
-    public static void updateMenu(Menu menu) throws Exception {
+    public static Response updateMenu(Menu menu) throws Exception {
         Request request = new Request(Operation.MENU_UPDATE, menu);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 
     public static void btnDeleteMenuActionPerformed(Menu menu, JTextField txtError, JTextField txtMenuName, JComboBox comboMenuItems, JButton btnAdd, JTable tblMenuItems, JButton btnSetIsActive, JRadioButton rbtnActive, JRadioButton rbtnNonActive, JComboBox comboMenu, JDialog menuUDForm) {
@@ -184,12 +183,12 @@ public class MenuUpdateDeleteFormController {
     }
 
     public static Response deleteMenu(Menu menu) throws Exception {
-        Request request = new Request(Operation.MENU_DELETE,menu);
+        Request request = new Request(Operation.MENU_DELETE, menu);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
-        if(response.getException()==null){
+        if (response.getException() == null) {
             return null;
-        }else{
+        } else {
             throw new Exception(response.getException().getMessage());
         }
     }
@@ -198,11 +197,11 @@ public class MenuUpdateDeleteFormController {
         MenuItem menuItem = (MenuItem) comboMenuItems.getSelectedItem();
         try {
             addMenuItemToMenu(menuItem, menu);
-            //menuService.addMenuItem(menuItem, menu);
+
             txtError.setText("Jelo je uspesno dodato u jelovnik.");
             JOptionPane.showMessageDialog(menuUDForm, "Jelo je uspesno dodato u jelovnik");
             setTableModel(menu, tblMenuItems);
-            // setTableModel();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             txtError.setForeground(Color.red);
@@ -226,18 +225,14 @@ public class MenuUpdateDeleteFormController {
         if (selectedRow != -1) {
             try {
                 Integer id = Integer.parseInt(tblMenuItems.getValueAt(selectedRow, 0).toString());
-                //String name = tblMenuItems.getValueAt(selectedRow, 1).toString();
-//                String description = tblMenuItems.getValueAt(selectedRow, 2).toString();
-//                BigDecimal price = (BigDecimal) tblMenuItems.getValueAt(selectedRow, 3);
-//                MenuCategory menuCategory = (MenuCategory) tblMenuItems.getValueAt(selectedRow, 4);
+
                 MenuItem menuItem = findMenuItemById(id);
                 menu = (Menu) comboMenu.getSelectedItem();
                 deleteMenuItemFromMenu(menu, menuItem);
-                // menuService.deleteMenuItem(menu, menuItem);
+
                 txtError.setText("Jelo je uspesno obrisano iz jelovnika.");
                 JOptionPane.showMessageDialog(menuUDForm, "Jelo je uspesno obrisano iz jelovnika");
                 setTableModel(menu, tblMenuItems);
-                //setTableModel();
 
             } catch (Exception e) {
                 txtError.setForeground(Color.red);
@@ -267,6 +262,28 @@ public class MenuUpdateDeleteFormController {
         Request request = new Request(Operation.MENU_DELETE_MENU_ITEM, arguments);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+    }
+
+    public static List<Menu> menuGetAll() throws Exception {
+        Request request = new Request(Operation.MENU_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<Menu>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
+    }
+
+    public static List<MenuItem> getAllMenuItems() throws Exception {
+        Request request = new Request(Operation.MENU_ITEM_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<MenuItem>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 
 }

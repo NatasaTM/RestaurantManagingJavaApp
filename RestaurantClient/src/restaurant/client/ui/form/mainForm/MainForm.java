@@ -7,6 +7,7 @@ import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.form.Menu.MenuAddForm;
 import restaurant.client.ui.form.Menu.MenuSearchForm;
 import restaurant.client.ui.form.Menu.MenuUpdateDeleteForm;
+import restaurant.client.ui.form.employee.EmployeeAccountUpdateDeleteForm;
 import restaurant.client.ui.form.employee.EmployeeAddForm;
 import restaurant.client.ui.form.employee.EmployeeCreateAccountForm;
 import restaurant.client.ui.form.employee.EmployeeSearchForm;
@@ -86,6 +87,7 @@ public class MainForm extends javax.swing.JFrame {
         menuItemEmployeeSearch = new javax.swing.JMenuItem();
         menuItemCreateAccount = new javax.swing.JMenuItem();
         menuItemAddEmployee = new javax.swing.JMenuItem();
+        menuItemAccountForm = new javax.swing.JMenuItem();
         menuOrder = new javax.swing.JMenu();
         menuItemGetAllOrder = new javax.swing.JMenuItem();
         menuItemCreateOrder = new javax.swing.JMenuItem();
@@ -374,6 +376,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuEmployee.add(menuItemAddEmployee);
 
+        menuItemAccountForm.setText("Pregled svih naloga");
+        menuItemAccountForm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAccountFormActionPerformed(evt);
+            }
+        });
+        menuEmployee.add(menuItemAccountForm);
+
         jMenuBar1.add(menuEmployee);
 
         menuOrder.setText("Porudzbina");
@@ -594,6 +604,10 @@ public class MainForm extends javax.swing.JFrame {
         new TableSearchForm(this, true).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void menuItemAccountFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAccountFormActionPerformed
+        new EmployeeAccountUpdateDeleteForm(this, true).setVisible(true);
+    }//GEN-LAST:event_menuItemAccountFormActionPerformed
+
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -615,6 +629,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JMenu menuEmployee;
+    private javax.swing.JMenuItem menuItemAccountForm;
     private javax.swing.JMenuItem menuItemAddCategory;
     private javax.swing.JMenuItem menuItemAddEmployee;
     private javax.swing.JMenuItem menuItemAddMenuItem;

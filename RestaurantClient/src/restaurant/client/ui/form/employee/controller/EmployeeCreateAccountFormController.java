@@ -139,10 +139,15 @@ public class EmployeeCreateAccountFormController {
         
     }
     
-    public static void addUserProfile(User user) throws Exception{
+    public static Response addUserProfile(User user) throws Exception{
         Request request = new Request(Operation.USER_ADD,user);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
 }

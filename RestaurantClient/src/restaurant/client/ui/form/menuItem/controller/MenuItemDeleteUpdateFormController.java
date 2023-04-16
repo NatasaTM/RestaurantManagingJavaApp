@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.form.menuItem.MenuItemAddForm;
-import static restaurant.client.ui.form.menuItem.controller.MenuItemAddFormController.getAllMenuCategory;
 import restaurant.common.domain.MenuCategory;
 import restaurant.common.domain.MenuItem;
 import restaurant.common.domain.MenuItemType;
@@ -101,10 +100,15 @@ public class MenuItemDeleteUpdateFormController {
         
     }
     
-    public static void updateMenuItem(MenuItem menuItem) throws Exception {
+    public static Response updateMenuItem(MenuItem menuItem) throws Exception {
         Request request = new Request(Operation.MENU_ITEM_UPDATE, menuItem);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
     public static void btnDeleteActionPerformed(JTextField txtError, JTextField txtId, JTextField txtName, JTextField txtDescription, JTextField txtPrice, JComboBox comboCategory, MenuItem menuItem) {
@@ -136,6 +140,16 @@ public class MenuItemDeleteUpdateFormController {
             throw new Exception(response.getException().getMessage());
         }
         
+    }
+    public static List<MenuCategory> getAllMenuCategory() throws Exception {
+        Request request = new Request(Operation.MENU_CATEGORY_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<MenuCategory>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
 }

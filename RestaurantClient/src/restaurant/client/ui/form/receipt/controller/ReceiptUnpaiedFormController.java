@@ -138,9 +138,14 @@ public class ReceiptUnpaiedFormController {
         }
     }
     
-     public static void updateOrder(Order order) throws Exception {
+     public static Response updateOrder(Order order) throws Exception {
         Request request = new Request(Operation.ORDER_UPDATE, order);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

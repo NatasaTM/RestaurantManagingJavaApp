@@ -379,10 +379,35 @@ public class ProcessClientRequests extends Thread {
                             response.setResult(receipts);
                             break;
                         }
-                        case TABLE_SET_IS_AVAILABLE:{
+                        case TABLE_SET_IS_AVAILABLE: {
                             Table table = (Table) request.getArguments().get(0);
                             boolean isAvailable = (boolean) request.getArguments().get(1);
                             TableController.getInstance().tableSetIsAvailable(table, isAvailable);
+                            break;
+                        }
+                        case USER_GET_ALL: {
+                            List<User> users = LoginController.getInstance().getAllUsers();
+                            response.setResult(users);
+                            break;
+                        }
+                        case USER_FIND_BY_ID:{
+                            String username = (String) request.getArgument();
+                            User user = LoginController.getInstance().findUserById(username);
+                            response.setResult(user);
+                            break;
+                        }
+                        
+                        case USER_DELETE:{
+                            User user = (User) request.getArgument();
+                            LoginController.getInstance().deleteUser(user);
+                            response.setResult("Nalog je uspesno izbrisan");
+                            break;
+                        }
+                        case USER_UPDATE:{
+                           User user = (User) request.getArgument();
+                           LoginController.getInstance().updateUser(user);
+                           response.setResult("Nalog je uspesno izmenjen");
+                            break;
                         }
 
                     }

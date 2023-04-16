@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.MenuItemTableModel;
-import restaurant.client.ui.form.menuItem.controller.MenuItemSearchFormController;
 import restaurant.common.domain.Menu;
 import restaurant.common.domain.MenuItem;
 import restaurant.common.domain.User;
@@ -31,7 +30,7 @@ public class MenuAddFormController {
     }
     public static void populateComboMenuItems(JComboBox comboMenuItems) {
         try {
-            comboMenuItems.setModel(new DefaultComboBoxModel<>(MenuItemSearchFormController.getAllMenuItems().toArray()));
+            comboMenuItems.setModel(new DefaultComboBoxModel<>(getAllMenuItems().toArray()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -77,10 +76,15 @@ public class MenuAddFormController {
         }
     }
     
-    public static void addMenu(Menu menu) throws Exception{
+    public static Response addMenu(Menu menu) throws Exception{
         Request request = new Request(Operation.MENU_ADD, menu);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if(response.getException()==null){
+            return null;
+        }else{
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
     public static void btnSelectActionPerformed(JComboBox comboMenuItems,List<MenuItem> menuItems,JTable tblMenuItems){
@@ -116,6 +120,26 @@ public class MenuAddFormController {
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
         if (response.getException() == null) {
             return (MenuItem) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
+    }
+    public static List<Menu> menuGetAll() throws Exception {
+        Request request = new Request(Operation.MENU_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<Menu>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
+    }
+    public static List<MenuItem> getAllMenuItems() throws Exception{
+        Request request = new Request(Operation.MENU_ITEM_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return  (List<MenuItem>) response.getResult();
         } else {
             throw new Exception(response.getException().getMessage());
         }

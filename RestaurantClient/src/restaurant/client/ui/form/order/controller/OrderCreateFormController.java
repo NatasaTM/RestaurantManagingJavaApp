@@ -233,16 +233,26 @@ public class OrderCreateFormController {
         }
     }
     
-    public static void updateTable(Table table) throws Exception{
+    public static Response updateTable(Table table) throws Exception{
        Request request = new Request(Operation.TABLE_UPDATE,table);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject(); 
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
-    public static void addOrder(Order order) throws Exception{
+    public static Response addOrder(Order order) throws Exception{
        Request request = new Request(Operation.ORDER_ADD,order);
         Communication.getInstance().getSender().writeObject(request);
-        Response response = (Response) Communication.getInstance().getReceiver().readObject();  
+        Response response = (Response) Communication.getInstance().getReceiver().readObject(); 
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
     public static void btnDeleteActionPerformed(JDialog orderCreateForm,OrderItemsTableModel orderItemsTableModel,JTextField txtTotalAmount,JTable tblOrder){
@@ -255,10 +265,10 @@ public class OrderCreateFormController {
                 OrderItem orderItem = new OrderItem(menuItem, quantity);
                 BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(tblOrder.getValueAt(selectedRow, 4).toString()));
 
-//                OrderItemsTableModel.getInstance().removeOrderItem(orderItem);
+
                 orderItemsTableModel.removeOrderItem(orderItem);
                 setOrderTableModel(tblOrder, orderItemsTableModel);
-                //setOrderTableModel();
+                
 
                 BigDecimal totalAmount = BigDecimal.valueOf(Double.parseDouble(txtTotalAmount.getText())).subtract(amount);
                 txtTotalAmount.setText(totalAmount.toString());
@@ -343,22 +353,6 @@ public class OrderCreateFormController {
             System.out.println(e.getMessage());
         }
     }
-    /*
-    try {
-            if (!comboCategory.getSelectedItem().toString().equals("Sve kategorije")) {
-                String categoryName = comboCategory.getSelectedItem().toString();
-
-                List<MenuItem> menuItems = getMenuItemFromMenuByCategory(categoryName, menu);
-                tblMenuItems.setModel(new MenuItemTableModel(menuItems));
-
-            } else {
-                setTableModel(comboMenu, tblMenuItems);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    */
     
     public static List<MenuItem> getMenuItemFromMenuByCategory(String categoryName,Menu menu) throws Exception{
            List<Object> arguments = new ArrayList<>();

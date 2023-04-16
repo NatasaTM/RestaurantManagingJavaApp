@@ -1,5 +1,6 @@
 package restaurant.server.controller;
 
+import java.util.List;
 import restaurant.common.domain.Role;
 import restaurant.common.domain.User;
 import restaurant.server.service.UserService;
@@ -29,6 +30,22 @@ public class LoginController {
     
     public void addUser(User user) throws Exception{
         userService.add(user);
+    }
+    
+    public List<User> getAllUsers() throws Exception{
+      return  userService.getAll();
+    }
+    
+    public User findUserById(String username) throws Exception{
+        return userService.findById(username);
+    }
+    
+    public void deleteUser(User user) throws Exception{
+        userService.delete(user);
+    }
+    
+    public void updateUser(User user) throws Exception{
+        userService.update(user);
     }
 
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -17,7 +16,6 @@ import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.OrderChefTableModel;
 import restaurant.client.ui.component.table.model.OrderItemChefTableModel;
 import restaurant.client.ui.form.order.OrderBartenderForm;
-import restaurant.client.ui.form.order.OrderChefsForm;
 import restaurant.client.ui.form.order.controller.renderer.CustomTableCellRenderer;
 import restaurant.common.domain.Employee;
 import restaurant.common.domain.MenuItemType;
@@ -34,11 +32,12 @@ import restaurant.common.transfer.Response;
  * @author Natasa Todorov Markovic
  */
 public class OrderBartenderFormController {
+
     public static void prepareView(OrderBartenderForm orderBartenderForm) {
         User user = ApplicationSession.getInstance().getLoginUser();
         orderBartenderForm.setTitle("BAR - Ulogovani ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
-         JTable table = orderBartenderForm.getTblOrderItems();
-         table.setModel(new OrderItemChefTableModel(new ArrayList<OrderItem>(), null));
+        JTable table = orderBartenderForm.getTblOrderItems();
+        table.setModel(new OrderItemChefTableModel(new ArrayList<OrderItem>(), null));
     }
 
     public static void setTableModel(List<Order> orders, JTable tblOrders) {
@@ -83,7 +82,7 @@ public class OrderBartenderFormController {
 
     public static List<Order> findByCondition(LocalDate date, Boolean statusReady, Boolean statusPaied, Employee employee, Table table) throws Exception {
         List<Object> arguments = new ArrayList<>();
-         date = null;
+        date = null;
         arguments.add(date);
         arguments.add(statusReady);
         arguments.add(statusPaied);
@@ -138,21 +137,17 @@ public class OrderBartenderFormController {
                 .collect(Collectors.toList());
         table.setModel(new OrderItemChefTableModel(filteredOrderItems, order));
 
-//        try {
-//            
-//          List<OrderItem>  orderItems = findOrderItemsByQuery(order, MenuItemType.DRINKS, false);
-//            
-//            System.out.println(orderItems);
-//             table.setModel(new OrderItemChefTableModel(orderItems,order));
-//        } catch (Exception ex) {
-//            Logger.getLogger(OrderChefsFormController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
-    public static void updateOrder(Order order) throws Exception {
+    public static Response updateOrder(Order order) throws Exception {
         Request request = new Request(Operation.ORDER_UPDATE, order);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 
     public static void btnUpdateActionPerformed(OrderBartenderForm orderBartenderForm) {
@@ -242,9 +237,14 @@ public class OrderBartenderFormController {
         }
     }
 
-    public static void updateOrderItem(OrderItem orderItem) throws Exception {
+    public static Response updateOrderItem(OrderItem orderItem) throws Exception {
         Request request = new Request(Operation.ORDERITEM_UPDATE, orderItem);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

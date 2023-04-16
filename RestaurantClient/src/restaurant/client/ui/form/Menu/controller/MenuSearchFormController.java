@@ -6,7 +6,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -15,8 +14,8 @@ import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.MenuItemTableModel;
 import restaurant.client.ui.form.Menu.MenuSearchForm;
 import restaurant.client.ui.form.Menu.MenuUpdateDeleteForm;
-import static restaurant.client.ui.form.menuItem.controller.MenuItemAddFormController.getAllMenuCategory;
 import restaurant.common.domain.Menu;
+import restaurant.common.domain.MenuCategory;
 import restaurant.common.domain.MenuItem;
 import restaurant.common.domain.User;
 import restaurant.common.transfer.Operation;
@@ -160,24 +159,33 @@ public class MenuSearchFormController {
     }
 
     public static void btnSelectMenuActionPerformed(MenuSearchForm menuSearchForm, ButtonGroup btnGroupMenuIsActive, JComboBox comboMenu, JTextField txtName, JTable tblMenuItems, JRadioButton rbtnActive, JRadioButton rbtnNonActive) {
-        //btnGroupMenuIsActive.clearSelection();
+
         Menu menu = (Menu) comboMenu.getSelectedItem();
         menuSearchForm.setMenu(menu);
         txtName.setText("Jelovnik: " + menu.getName());
         System.out.println(menu);
         setTableModel(comboMenu, tblMenuItems);
-        
+
         if (menu != null && menu.isIsActiv()) {
-           // rbtnActive.setSelected(true);
-            //rbtnNonActive.setSelected(false);
+
             setIsSelected(menuSearchForm, rbtnActive, rbtnNonActive);
 
         }
         if (!menu.isIsActiv()) {
-            //rbtnNonActive.setSelected(true);
-             //rbtnActive.setSelected(false);
+
             setIsSelected(menuSearchForm, rbtnActive, rbtnNonActive);
-           
+
+        }
+    }
+
+    public static List<MenuCategory> getAllMenuCategory() throws Exception {
+        Request request = new Request(Operation.MENU_CATEGORY_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<MenuCategory>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
         }
     }
 

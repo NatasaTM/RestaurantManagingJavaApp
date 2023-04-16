@@ -8,7 +8,7 @@ public enum Operation {
     
     LOGIN,END,
     
-    USER_ADD,
+    USER_ADD,USER_GET_ALL,USER_FIND_BY_ID,USER_DELETE,USER_UPDATE,
     
     ROLE_GET_ALL,
     

@@ -131,7 +131,7 @@ public class OrderSearchFormController {
             try {
                 orders = findByCondition(date, orderSearchForm.getStatusReady(), orderSearchForm.getStatusPaied(), orderSearchForm.getEmployee(), orderSearchForm.getTable());
                 setTableModel(orders, tblOrders);
-                // setTableModel(orders);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -325,7 +325,7 @@ public class OrderSearchFormController {
             try {
                 Order order = findOrderById(id);
                 List<OrderItem> orderItems = order.getOrderItems();
-                // setListModel(orderItems);
+
                 setListModel(orderItems, listOrderItems);
 
             } catch (Exception ex) {

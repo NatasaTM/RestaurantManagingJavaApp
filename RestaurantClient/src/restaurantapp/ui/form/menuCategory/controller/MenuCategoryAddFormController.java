@@ -16,10 +16,8 @@ import restaurant.common.transfer.Response;
  * @author Natasa Todorov Markovic
  */
 public class MenuCategoryAddFormController {
-    
-    
-    
-    public static void save(JTextArea txtError,JTextField txtName){
+
+    public static void save(JTextArea txtError, JTextField txtName) {
         String name = txtName.getText().trim();
         if (name.isEmpty()) {
             txtError.setText("Morate uneti naziv kategorije!");
@@ -35,17 +33,21 @@ public class MenuCategoryAddFormController {
 
         }
     }
-    
-    public static void setTitle(JDialog menuCategoryAddForm){
+
+    public static void setTitle(JDialog menuCategoryAddForm) {
         User user = ApplicationSession.getInstance().getLoginUser();
         menuCategoryAddForm.setTitle("Prijavljeni ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
     }
-    
-    public static void addMenuCategory(MenuCategory menuCategory) throws Exception{
+
+    public static Response addMenuCategory(MenuCategory menuCategory) throws Exception {
         Request request = new Request(Operation.MENU_CATEGORY_ADD, menuCategory);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
-    
-    
+
 }

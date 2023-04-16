@@ -15,52 +15,76 @@ import restaurant.server.service.UserService;
  * @author Natasa Todorov Markovic
  */
 public class UserServiceImpl implements UserService {
-
+    
     private final UserRepositoryImpl userRepositoryImpl;
-    private final GenericRepository<Employee,Integer> employeeRepository;
-    private final GenericRepository<Role,Integer> roleRepository;
-
+    private final GenericRepository<Employee, Integer> employeeRepository;
+    private final GenericRepository<Role, Integer> roleRepository;
+    
     public UserServiceImpl() {
-
+        
         userRepositoryImpl = new UserRepositoryImpl();
         employeeRepository = new EmployeeRepositoryImpl();
         roleRepository = new RoleRepositoryImpl();
     }
-
+    
     @Override
     public User login(String username, String password) throws Exception {
-
-        String query = "SELECT * FROM `user` WHERE username = '"+username+"' AND `password`='"+password+"'";
-        System.out.println(query);
-        List<User>users = userRepositoryImpl.findByQuery(query);
-        if(users.isEmpty()) throw new Exception("Korisnik ne postoji u sistemu!");
         
-         User user = users.get(0);
-         
-         Employee employee =employeeRepository.findById(user.getEmployee().getId());
-         
-           if (employee == null){
-            throw  new Exception("Profil ne mogu da povezem sa Zaposlenim!!!");
+        String query = "SELECT * FROM `user` WHERE username = '" + username + "' AND `password`='" + password + "'";
+        System.out.println(query);
+        List<User> users = userRepositoryImpl.findByQuery(query);
+        if (users.isEmpty()) {
+            throw new Exception("Korisnik ne postoji u sistemu!");
+        }
+        
+        User user = users.get(0);
+        
+        Employee employee = employeeRepository.findById(user.getEmployee().getId());
+        
+        if (employee == null) {
+            throw new Exception("Profil ne mogu da povezem sa Zaposlenim!!!");
         }
         user.setEmployee(employee);
-        query = "SELECT r.roleId , r.name  FROM `role` r JOIN `userrole` ur ON r.roleId = ur.roleId WHERE ur.username ='"+user.getUsername()+"'";
+        query = "SELECT r.roleId , r.name  FROM `role` r JOIN `userrole` ur ON r.roleId = ur.roleId WHERE ur.username ='" + user.getUsername() + "'";
         
-        try{
+        try {
             List<Role> roles = roleRepository.findByQuery(query);
-        
+            
             user.setRoles(roles);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
         return user;
     }
-
+    
     @Override
     public void add(User user) throws Exception {
-         userRepositoryImpl.add(user);
-         
-            
+        userRepositoryImpl.add(user);
+        
+    }
+    
+    @Override
+    public User findById(String username) throws Exception {
+        User user = userRepositoryImpl.findById(username);
+        Employee employee = employeeRepository.findById(user.getEmployee().getId());
+        user.setEmployee(employee);
+        return user;
+    }
+    
+    @Override
+    public void delete(User user) throws Exception {
+        userRepositoryImpl.delete(user);
+    }
+    
+    @Override
+    public void update(User user) throws Exception {
+        userRepositoryImpl.update(user);
     }
 
+    @Override
+    public List<User> getAll() throws Exception {
+        return userRepositoryImpl.getAll();
+    }
+    
 }

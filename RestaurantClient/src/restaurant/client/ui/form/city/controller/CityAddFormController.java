@@ -52,9 +52,14 @@ public class CityAddFormController {
         } 
     }
     
-    public static void addCity(City city) throws Exception{
+    public static Response addCity(City city) throws Exception{
         Request request = new Request(Operation.CITY_ADD,city);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

@@ -49,10 +49,15 @@ public class TableUpdateDeleteFormController {
         }
     }
     
-    public static void deleteTable(Table table) throws Exception{
+    public static Response deleteTable(Table table) throws Exception{
         Request request = new Request(Operation.TABLE_DELETE,table);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
     
     public static void btnUpdateActionPerformed(JDialog tableUDForm,JCheckBox chckIsAvailable,JTextField txtTableId,JTextField txtNumberOfSeats){
@@ -79,9 +84,14 @@ public class TableUpdateDeleteFormController {
             JOptionPane.showMessageDialog(tableUDForm, e.getMessage(),"error",JOptionPane.ERROR_MESSAGE); 
         }
     }
-    public static void updateTable(Table table) throws Exception{
+    public static Response updateTable(Table table) throws Exception{
          Request request = new Request(Operation.TABLE_UPDATE,table);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

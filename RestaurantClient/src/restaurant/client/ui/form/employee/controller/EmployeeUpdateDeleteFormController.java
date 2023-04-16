@@ -24,27 +24,27 @@ import restaurant.common.transfer.Response;
  * @author Natasa Todorov Markovic
  */
 public class EmployeeUpdateDeleteFormController {
-    
-     public static void populateComboCities(JComboBox comboCity) {
+
+    public static void populateComboCities(JComboBox comboCity) {
         try {
             comboCity.setModel(new DefaultComboBoxModel<>(getAllCities().toArray()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-     
-      public static List <City> getAllCities() throws Exception{
-          Request request = new Request(Operation.CITY_GET_ALL);
+
+    public static List<City> getAllCities() throws Exception {
+        Request request = new Request(Operation.CITY_GET_ALL);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
         if (response.getException() == null) {
-            return   (List<City>) response.getResult();
+            return (List<City>) response.getResult();
         } else {
             throw new Exception(response.getException().getMessage());
-        } 
+        }
     }
-      
-      public static void prepareView(JDialog employeeUDForm,Employee employee,JTextField txtId,JTextField txtJmbg, JTextField txtFirstName,JTextField txtLastname,JDateChooser dateChooser,JTextField txtAdress,JComboBox comboCity) {
+
+    public static void prepareView(JDialog employeeUDForm, Employee employee, JTextField txtId, JTextField txtJmbg, JTextField txtFirstName, JTextField txtLastname, JDateChooser dateChooser, JTextField txtAdress, JComboBox comboCity) {
         User user = ApplicationSession.getInstance().getLoginUser();
         employeeUDForm.setTitle("Prijavljeni ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
 
@@ -58,9 +58,9 @@ public class EmployeeUpdateDeleteFormController {
         txtAdress.setText(employee.getAdress());
         comboCity.setSelectedItem(employee.getCity());
     }
-      
-      public static void btnUpdateActionPerformed(JDialog employeeUDForm,JTextField txtId,JTextField txtJmbg, JTextField txtFirstName,JTextField txtLastname,JDateChooser dateChooser,JTextField txtAdress,JComboBox comboCity){
-         boolean isValid = true;
+
+    public static void btnUpdateActionPerformed(JDialog employeeUDForm, JTextField txtId, JTextField txtJmbg, JTextField txtFirstName, JTextField txtLastname, JDateChooser dateChooser, JTextField txtAdress, JComboBox comboCity) {
+        boolean isValid = true;
         Integer id = Integer.parseInt(txtId.getText().trim().toString());
         String jmbg = txtJmbg.getText().trim();
         String firstname = txtFirstName.getText().trim();
@@ -86,17 +86,22 @@ public class EmployeeUpdateDeleteFormController {
                 JOptionPane.showMessageDialog(employeeUDForm, ex.getMessage());
             }
 
-        } 
-      }
-      
-      public static void updateEmployee(Employee employee) throws Exception{
-          Request request = new Request(Operation.EMPLOYEE_UPDATE,employee);
+        }
+    }
+
+    public static Response updateEmployee(Employee employee) throws Exception {
+        Request request = new Request(Operation.EMPLOYEE_UPDATE, employee);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
-      }
-      
-      public static void btnDeleteActionPerformed(JDialog employeeUDForm,JTextField txtId,JTextField txtJmbg, JTextField txtFirstName,JTextField txtLastname,JDateChooser dateChooser,JTextField txtAdress,JComboBox comboCity){
-          Integer id = Integer.parseInt(txtId.getText().trim().toString());
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
+    }
+
+    public static void btnDeleteActionPerformed(JDialog employeeUDForm, JTextField txtId, JTextField txtJmbg, JTextField txtFirstName, JTextField txtLastname, JDateChooser dateChooser, JTextField txtAdress, JComboBox comboCity) {
+        Integer id = Integer.parseInt(txtId.getText().trim().toString());
         try {
             Employee employee = findById(id);
             deleteEmployee(employee);
@@ -112,22 +117,27 @@ public class EmployeeUpdateDeleteFormController {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(employeeUDForm, ex.getMessage());
         }
-      }
-      
-      public static Employee findById(Integer id) throws Exception{
-        Request request = new Request(Operation.EMPLOYE_FIND_BY_ID,id);
+    }
+
+    public static Employee findById(Integer id) throws Exception {
+        Request request = new Request(Operation.EMPLOYE_FIND_BY_ID, id);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
         if (response.getException() == null) {
-            return  (Employee) response.getResult();
+            return (Employee) response.getResult();
         } else {
             throw new Exception(response.getException().getMessage());
-        } 
+        }
     }
-      
-      public static void deleteEmployee(Employee employee) throws Exception{
-         Request request = new Request(Operation.EMPLOYEE_DELETE,employee);
+
+    public static Response deleteEmployee(Employee employee) throws Exception {
+        Request request = new Request(Operation.EMPLOYEE_DELETE, employee);
         Communication.getInstance().getSender().writeObject(request);
-        Response response = (Response) Communication.getInstance().getReceiver().readObject(); 
-      }
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
+    }
 }

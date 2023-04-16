@@ -87,9 +87,14 @@ public class EmployeeAddFormController {
         }
     }
     
-    public static void addEmployee(Employee employee) throws Exception{
+    public static Response addEmployee(Employee employee) throws Exception{
         Request request = new Request(Operation.EMPLOYEE_ADD,employee);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

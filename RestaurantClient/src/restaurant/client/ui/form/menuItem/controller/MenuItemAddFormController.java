@@ -120,10 +120,15 @@ public class MenuItemAddFormController {
         }
     }
 
-    public static void addMenuItem(MenuItem menuItem) throws Exception {
+    public static Response addMenuItem(MenuItem menuItem) throws Exception {
         Request request = new Request(Operation.MENU_ITEM_ADD, menuItem);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
 
     }
     

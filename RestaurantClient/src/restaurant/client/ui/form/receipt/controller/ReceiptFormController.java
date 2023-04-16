@@ -114,34 +114,33 @@ public class ReceiptFormController {
         PaymentMethodType paymentMethodType = receiptForm.getPaymentMethodType();
         String cardNumber = null;
         boolean isValid = true;
-        if(paymentMethodType == null){
+        if (paymentMethodType == null) {
             JOptionPane.showMessageDialog(null, "Niste izabrali nacin placanja!");
             isValid = false;
         }
-        if(isValid){
-            
-        
-        if (paymentMethodType.equals(PaymentMethodType.VISA)) {
-            cardNumber = txtCardNumber.getText();
-            if (cardNumber.isEmpty()) {
-                JOptionPane.showMessageDialog(receiptForm, "Morate uneti broj kartice");
+        if (isValid) {
 
-            } else {
-                PaymentMethodFactory.getPaymentMethod(paymentMethodType).executePayment(receipt.getAmount());
-                Payment payment = new Payment(null, LocalDateTime.now(), receipt, receiptForm.getPaymentMethodType());
-                try {
-                    addPayment(payment);
-                    freeTable(payment);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+            if (paymentMethodType.equals(PaymentMethodType.VISA)) {
+                cardNumber = txtCardNumber.getText();
+                if (cardNumber.isEmpty()) {
+                    JOptionPane.showMessageDialog(receiptForm, "Morate uneti broj kartice");
+
+                } else {
+                    PaymentMethodFactory.getPaymentMethod(paymentMethodType).executePayment(receipt.getAmount());
+                    Payment payment = new Payment(null, LocalDateTime.now(), receipt, receiptForm.getPaymentMethodType());
+                    try {
+                        addPayment(payment);
+                        freeTable(payment);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    String message = "Broj kartice: " + cardNumber + "\n" + "Payment Authorization processing... \n " + "The account balance is being checked... \n " + "Payment is being processed...\n" + "Payment successful";
+                    txtAreaMessage.setText(message);
+
                 }
-                String message = "Broj kartice: " + cardNumber + "\n" + "Payment Authorization processing... \n " + "The account balance is being checked... \n " + "Payment is being processed...\n" + "Payment successful";
-                txtAreaMessage.setText(message);
-            
-            }  
-        }
-        if (receiptForm.getPaymentMethodType().equals(PaymentMethodType.CASH)) {
-            PaymentMethodFactory.getPaymentMethod(paymentMethodType).executePayment(receipt.getAmount());
+            }
+            if (receiptForm.getPaymentMethodType().equals(PaymentMethodType.CASH)) {
+                PaymentMethodFactory.getPaymentMethod(paymentMethodType).executePayment(receipt.getAmount());
                 Payment payment = new Payment(null, LocalDateTime.now(), receipt, receiptForm.getPaymentMethodType());
                 try {
                     addPayment(payment);
@@ -149,28 +148,32 @@ public class ReceiptFormController {
                 } catch (Exception ex) {
                     Logger.getLogger(ReceiptFormController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //String message = "Broj kartice: " + cardNumber + "\n" + "Payment Authorization processing... \n " + "The account balance is being checked... \n " + "Payment is being processed...\n" + "Payment successful";
-                //txtAreaMessage.setText(message);
-            txtAreaMessage.setText("Payment successful");
+
+                txtAreaMessage.setText("Payment successful");
+            }
         }
-        }
-        
+
         btnConfirmPayment.setEnabled(false);
     }
-    
-    public static void addPayment(Payment payment) throws Exception{
+
+    public static Response addPayment(Payment payment) throws Exception {
         Request request = new Request(Operation.PAYMENT_ADD, payment);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
-    
-    public static void tableSetIsAvailable(Table table,boolean isAvailable) throws Exception{
+
+    public static void tableSetIsAvailable(Table table, boolean isAvailable) throws Exception {
         List<Object> arguments = new ArrayList<>();
         arguments.add(table);
         arguments.add(isAvailable);
-        Request request = new Request(Operation.TABLE_SET_IS_AVAILABLE,arguments);
+        Request request = new Request(Operation.TABLE_SET_IS_AVAILABLE, arguments);
         Communication.getInstance().getSender().writeObject(request);
-        Response response = (Response) Communication.getInstance().getReceiver().readObject(); 
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
     }
 
     private static void freeTable(Payment payment) {
@@ -185,7 +188,5 @@ public class ReceiptFormController {
             }
         }
     }
-    
-    
 
 }
