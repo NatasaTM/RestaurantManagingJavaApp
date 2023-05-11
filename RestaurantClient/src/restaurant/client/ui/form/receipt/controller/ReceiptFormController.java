@@ -106,6 +106,9 @@ public class ReceiptFormController {
         if (paymentMethodType.equals(PaymentMethodType.VISA)) {
             btnConfirmCardNumber.setEnabled(true);
             txtCardNumber.setEditable(true);
+            JOptionPane.showMessageDialog(null, "Nacin placanja : VISA je uspesno odabran. Unesite broj kartice: ");
+        } else {
+            JOptionPane.showMessageDialog(null, "Nacin placanja : CASH je uspesno odabran");
         }
         receiptForm.setPaymentMethodType(paymentMethodType);
     }
@@ -187,6 +190,23 @@ public class ReceiptFormController {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static void btnConfirmCardNumberActionPerformed(JTextField txtCardNumber) {
+        String cardNumber = txtCardNumber.getText().trim();
+        if (containsOnlyNumbers(cardNumber)) {
+            JOptionPane.showMessageDialog(null, "Broj kartice: " + cardNumber);
+        } else {
+            JOptionPane.showMessageDialog(null, "Pogresan unos", "error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public static boolean containsOnlyNumbers(String cardNumber) {
+        // izraz za proveru da li string sadrzi samo brojeve
+        String regex = "[0-9]+";
+
+        return cardNumber.matches(regex);
     }
 
 }

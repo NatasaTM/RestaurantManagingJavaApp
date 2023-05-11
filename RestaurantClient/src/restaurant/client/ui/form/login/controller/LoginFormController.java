@@ -1,12 +1,16 @@
 package restaurant.client.ui.form.login.controller;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
+import restaurant.client.ui.form.loginForm.LogInForm;
 import restaurant.common.domain.Role;
 import restaurant.common.domain.User;
 import restaurant.client.ui.form.mainForm.MainForm;
@@ -60,6 +64,16 @@ public class LoginFormController {
     public static void logout() throws Exception {
         Request request = new Request(Operation.END);
         Communication.getInstance().getSender().writeObject(request);
+    }
+    
+    public static void prepareView(LogInForm logInForm,JPanel jPanel1){
+        logInForm.setLayout(new BorderLayout());
+        JPanel gridPanel = new JPanel(new GridLayout());
+        gridPanel.add(jPanel1);
+        logInForm.getContentPane().add(gridPanel);
+        
+        logInForm.pack();
+        
     }
     
 }

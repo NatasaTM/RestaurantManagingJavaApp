@@ -1,6 +1,7 @@
 package restaurant.server.controller;
 
 import java.util.List;
+import restaurant.common.domain.Employee;
 import restaurant.common.domain.Receipt;
 import restaurant.server.service.ReceiptService;
 import restaurant.server.service.impl.ReceiptServiceImpl;
@@ -38,5 +39,9 @@ public class ReceiptController {
    
    public List<Receipt> findUnpaiedReceipts() throws Exception{
        return receiptService.findUnpaiedReceipts();
+   }
+   
+   public List<Receipt> findUnpaiedReceiptsByEmployee(Employee employee) throws Exception{
+       return receiptService.findUnpaiedReceiptsByEmployee(employee);
    }
 }

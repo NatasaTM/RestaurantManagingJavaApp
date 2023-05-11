@@ -158,6 +158,8 @@ public class OrderBartenderFormController {
             try {
 
                 updateOrderItem(o);
+                JTable table = orderBartenderForm.getTblOrderItems();
+                table.setModel(new OrderItemChefTableModel(new ArrayList<OrderItem>(), null));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -181,13 +183,13 @@ public class OrderBartenderFormController {
                 orderBartenderForm.getTblOrder().setSelectionBackground(Color.WHITE);
 
                 orderBartenderForm.setOrder(null);
-                //  setTableModel(findByCondition(LocalDate.now(), false, false, null, null), orderChefsForm.getTblOrder());
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
 
-        orderBartenderForm.getPnlOrderItems().setVisible(false);
+        
     }
 
     public static List<OrderItem> findOrderItemsByQuery(Order order, MenuItemType menuItemType, boolean isReady) throws Exception {

@@ -76,6 +76,7 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         textAreaTables = new javax.swing.JTextArea();
+        btnUnpaiedReceipts = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -307,7 +308,7 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit)
                     .addComponent(btnCancel))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Stolovi sa neplacenim porudzbinama"));
@@ -335,6 +336,13 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
                 .addGap(16, 16, 16))
         );
 
+        btnUnpaiedReceipts.setText("Prikazi nenaplacene racune");
+        btnUnpaiedReceipts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnpaiedReceiptsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -347,10 +355,12 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
                         .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlTableOrder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlOrderItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlOrderItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnUnpaiedReceipts))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -367,7 +377,10 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlPaymentOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUnpaiedReceipts)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -411,6 +424,10 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         OrderPreparePaymentFormController.btnSubmitActionPerformed(this);
     }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void btnUnpaiedReceiptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnpaiedReceiptsActionPerformed
+        OrderPreparePaymentFormController.btnUnpaiedReceiptsActionPerformed();
+    }//GEN-LAST:event_btnUnpaiedReceiptsActionPerformed
     
     private void prepareView() {
         OrderPreparePaymentFormController.prepareView(textAreaTables, this, btnSubmit, tblOrder, btnAddAllOrders, btnAddOrder, tblPaymentOrder, btnDelete, btnDeleteAll);
@@ -429,6 +446,7 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
     private javax.swing.JButton btnDeleteAll;
     private javax.swing.JButton btnSelectTable;
     private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnUnpaiedReceipts;
     private javax.swing.JComboBox<Object> comboTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

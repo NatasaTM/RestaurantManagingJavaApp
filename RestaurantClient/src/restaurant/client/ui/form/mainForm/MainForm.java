@@ -1,7 +1,15 @@
 package restaurant.client.ui.form.mainForm;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.form.Menu.MenuAddForm;
@@ -13,6 +21,7 @@ import restaurant.client.ui.form.employee.EmployeeCreateAccountForm;
 import restaurant.client.ui.form.employee.EmployeeSearchForm;
 import restaurant.client.ui.form.login.controller.LoginFormController;
 import restaurant.client.ui.form.loginForm.LogInForm;
+import restaurant.client.ui.form.mainForm.controller.MainFormController;
 import restaurant.client.ui.form.menuItem.MenuItemAddForm;
 import restaurant.client.ui.form.menuItem.MenuItemSearchForm;
 import restaurant.client.ui.form.order.OrderBartenderForm;
@@ -39,14 +48,8 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         setLocationRelativeTo(null);
-       // setMaximumSize(new Dimension(994, 639));
-        setResizable(false);
-        
-        prepareForm();
-        
-        pack();
-        
-           
+        prepareView();
+
     }
 
     /**
@@ -58,7 +61,6 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnLogout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnMenu = new javax.swing.JButton();
@@ -96,19 +98,13 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         menuReceipt = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        menuLogOut = new javax.swing.JMenu();
+        menuItemLogOut = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
-            }
-        });
-
-        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnLogout.setText("Odjavi se");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
             }
         });
 
@@ -282,9 +278,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        menuMeals.setText("Jelo");
+        menuMeals.setText("Jelo/Pice");
 
-        menuItemMenuItemGetAllMeals.setText("Prikaz svih jela");
+        menuItemMenuItemGetAllMeals.setText("Prikaz svih jela/pica");
         menuItemMenuItemGetAllMeals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemMenuItemGetAllMealsActionPerformed(evt);
@@ -292,7 +288,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuMeals.add(menuItemMenuItemGetAllMeals);
 
-        menuItemAddMenuItem.setText("Dodaj novo jelo ");
+        menuItemAddMenuItem.setText("Dodaj novo jelo/pice");
         menuItemAddMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemAddMenuItemActionPerformed(evt);
@@ -442,6 +438,18 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.add(menuReceipt);
 
+        menuLogOut.setText("Odjava");
+
+        menuItemLogOut.setText(" Odjavi se");
+        menuItemLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLogOutActionPerformed(evt);
+            }
+        });
+        menuLogOut.add(menuItemLogOut);
+
+        jMenuBar1.add(menuLogOut);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -464,10 +472,6 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addContainerGap(153, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogout)
-                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,9 +489,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnLogout)
-                .addGap(33, 33, 33)
+                .addGap(62, 62, 62)
                 .addComponent(jLabel1)
                 .addGap(210, 210, 210))
         );
@@ -507,16 +509,6 @@ public class MainForm extends javax.swing.JFrame {
         new MenuCategoryAddForm(this, true).setVisible(true);
     }//GEN-LAST:event_menuItemAddCategoryActionPerformed
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        try {
-            LoginFormController.logout();
-        } catch (Exception ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        new LogInForm().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
     private void menuItemMenuGetAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemMenuGetAllActionPerformed
         new MenuSearchForm(this, true).setVisible(true);
     }//GEN-LAST:event_menuItemMenuGetAllActionPerformed
@@ -534,9 +526,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemEmployeeSearchActionPerformed
 
     private void menuItemCreateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateOrderActionPerformed
-       
+
         new OrderCreateForm(this, true).setVisible(true);
-       
+
     }//GEN-LAST:event_menuItemCreateOrderActionPerformed
 
     private void menuItemUpdateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUpdateMenuActionPerformed
@@ -548,7 +540,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
-      new OrderPreparePaymentForm(this, true).setVisible(true);
+        new OrderPreparePaymentForm(this, true).setVisible(true);
     }//GEN-LAST:event_btnPaymentActionPerformed
 
     private void btnCreateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateOrderActionPerformed
@@ -608,11 +600,18 @@ public class MainForm extends javax.swing.JFrame {
         new EmployeeAccountUpdateDeleteForm(this, true).setVisible(true);
     }//GEN-LAST:event_menuItemAccountFormActionPerformed
 
- 
+    private void menuItemLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogOutActionPerformed
+        try {
+
+            MainFormController.menuItemLogOutActionPerformed(this);
+        } catch (Exception ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuItemLogOutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateOrder;
-    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnOrderView;
     private javax.swing.JButton btnPayment;
@@ -639,11 +638,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemCreateOrder;
     private javax.swing.JMenuItem menuItemEmployeeSearch;
     private javax.swing.JMenuItem menuItemGetAllOrder;
+    private javax.swing.JMenuItem menuItemLogOut;
     private javax.swing.JMenuItem menuItemMenuGetAll;
     private javax.swing.JMenuItem menuItemMenuItemGetAllMeals;
     private javax.swing.JMenuItem menuItemPayment;
     private javax.swing.JMenuItem menuItemTablesSerach;
     private javax.swing.JMenuItem menuItemUpdateMenu;
+    private javax.swing.JMenu menuLogOut;
     private javax.swing.JMenu menuMeals;
     private javax.swing.JMenu menuMenu;
     private javax.swing.JMenu menuOrder;
@@ -651,33 +652,79 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuTables;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareForm() {
-        
-        User user = ApplicationSession.getInstance().getLoginUser();
-       
-       
-        this.setTitle("Prijavljeni ste kao: " + user.getEmployee().getFirstname()+" " + user.getEmployee().getLastname());
-        // administrator = 1, sef kuhinje = 2, konobar = 3
-       if (user.intRole()==2){
-            
-            menuEmployee.setEnabled(false);
-            menuItemCreateOrder.setEnabled(false);
-            menuItemGetAllOrder.setEnabled(false);
-            menuItemPayment.setEnabled(false);
-            btnCreateOrder.setEnabled(false);
-            btnPayment.setEnabled(false);
-            
-        }
-       if(user.intRole()==3){
-           menuEmployee.setEnabled(false);
-           menuMeals.setEnabled(false);
-           menuItemGetAllOrder.setEnabled(false);
-//           menuMenu.setEnabled(true);
-//           
-//           menuItemCreateNewMenu.setEnabled(false);
-//           menuMeals.setEnabled(false);
-       }
+    private void prepareView() {
+        MainFormController.prepareView(this, jPanel1, jPanel2, jPanel3, jPanel4, jPanel5, jPanel6);
+//        User user = ApplicationSession.getInstance().getLoginUser();
+//        this.setLayout(new BorderLayout());
+//
+//        jPanel1.setLayout(new GridBagLayout());
+//        jPanel2.setLayout(new GridBagLayout());
+//        jPanel3.setLayout(new GridBagLayout());
+//        jPanel4.setLayout(new GridBagLayout());
+//        jPanel5.setLayout(new GridBagLayout());
+//        jPanel6.setLayout(new GridBagLayout());
+//
+//        JPanel gridPanel = new JPanel(new GridLayout(2, 3, 10, 10));
+//        gridPanel.add(jPanel1);
+//        gridPanel.add(jPanel2);
+//        gridPanel.add(jPanel3);
+//        gridPanel.add(jPanel4);
+//        gridPanel.add(jPanel5);
+//        gridPanel.add(jPanel6);
+//
+//        this.getContentPane().add(gridPanel);
+//        this.setMinimumSize(new Dimension(1000, 700));
+//        this.pack();
+//
+//        this.setTitle("Prijavljeni ste kao: " + user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
+//        // administrator = 1, sef kuhinje = 2, konobar = 3
+//        if (user.intRole() == 2) {
+//
+//            menuEmployee.setEnabled(false);
+//            menuItemCreateOrder.setEnabled(false);
+//            menuItemGetAllOrder.setEnabled(false);
+//            menuItemPayment.setEnabled(false);
+//            btnCreateOrder.setEnabled(false);
+//            btnPayment.setEnabled(false);
+//
+//        }
+//        if (user.intRole() == 3) {
+//            menuEmployee.setEnabled(false);
+//            menuMeals.setEnabled(false);
+//            menuItemGetAllOrder.setEnabled(false);
+////           menuMenu.setEnabled(true);
+////           
+////           menuItemCreateNewMenu.setEnabled(false);
+////           menuMeals.setEnabled(false);
+//        }
     }
 
+    public JButton getBtnCreateOrder() {
+        return btnCreateOrder;
+    }
+
+    public JButton getBtnPayment() {
+        return btnPayment;
+    }
+
+    public JMenu getMenuEmployee() {
+        return menuEmployee;
+    }
+
+    public JMenuItem getMenuItemCreateOrder() {
+        return menuItemCreateOrder;
+    }
+
+    public JMenuItem getMenuItemGetAllOrder() {
+        return menuItemGetAllOrder;
+    }
+
+    public JMenuItem getMenuItemPayment() {
+        return menuItemPayment;
+    }
+
+    public JMenu getMenuMeals() {
+        return menuMeals;
+    }
 
 }

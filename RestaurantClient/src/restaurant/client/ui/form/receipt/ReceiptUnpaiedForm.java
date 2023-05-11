@@ -138,6 +138,6 @@ public class ReceiptUnpaiedForm extends javax.swing.JDialog {
     }
 
     private void setTableModel() {
-        ReceiptUnpaiedFormController.setTableModel(tblReceipt);
+        ReceiptUnpaiedFormController.setTableModel(tblReceipt, btnDetails, btnPay);
     }
 }

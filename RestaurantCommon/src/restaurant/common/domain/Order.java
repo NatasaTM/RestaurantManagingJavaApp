@@ -107,7 +107,8 @@ public class Order implements Serializable {
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy." + " " + " HH:mm:ss");
         DecimalFormat df = new DecimalFormat("0.00");
-        return "ID: " + orderId + ", Datum: " + date.format(dtf) + ", Ukupan iznos: " + df.format(totalAmount) + ", Status gotova: " + orderReadyStatus + ", Status placena: " + orderPaidStatus + ", Zaposleni: " + employee + ", Sto = " + table + ",\nStavke porudzbine: " + orderItems;
+//        return "ID: " + orderId + ", Datum: " + date.format(dtf) + ", Ukupan iznos: " + df.format(totalAmount) + ", Status gotova: " + orderReadyStatus + ", Status placena: " + orderPaidStatus + ", Zaposleni: " + employee + ", Sto = " + table + ",\nStavke porudzbine: " + orderItems;
+        return "ID: " + orderId + ", Ukupan iznos: " + totalAmount + ", Status gotova: " + orderReadyStatus + ", Status placena: " + orderPaidStatus + ", Zaposleni: " + employee + ", Sto = " + table + ",\nStavke porudzbine: " + orderItems;
     }
 
     @Override

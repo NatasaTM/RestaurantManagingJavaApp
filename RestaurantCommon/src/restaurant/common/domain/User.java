@@ -68,6 +68,7 @@ public class User implements Serializable{
             if (r.getName().toUpperCase().equals("administrator".toUpperCase())) return 1;
             if(r.getName().toUpperCase().equals("sef kuhinje".toUpperCase())) return 2;
             if(r.getName().toUpperCase().equals("konobar".toUpperCase())) return 3;
+            if(r.getName().toUpperCase().equals("barmen".toUpperCase())) return 4;
         }
         return -1;
     }

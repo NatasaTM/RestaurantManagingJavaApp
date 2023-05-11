@@ -14,6 +14,7 @@ public class LogInForm extends javax.swing.JFrame {
     public LogInForm() {
         initComponents();
         setLocationRelativeTo(null);
+        prepareView();
        
     }
 
@@ -142,4 +143,8 @@ public class LogInForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void prepareView() {
+       LoginFormController.prepareView(this, jPanel1);
+    }
 }

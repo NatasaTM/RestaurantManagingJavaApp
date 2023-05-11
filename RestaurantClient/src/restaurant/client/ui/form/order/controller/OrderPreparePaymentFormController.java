@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +23,7 @@ import restaurant.client.ui.component.table.model.OrderItemListModel;
 import restaurant.client.ui.component.table.model.OrderTableModel;
 import restaurant.client.ui.form.order.OrderPreparePaymentForm;
 import restaurant.client.ui.form.receipt.ReceiptForm;
+import restaurant.client.ui.form.receipt.ReceiptUnpaiedForm;
 import restaurant.common.domain.Employee;
 import restaurant.common.domain.Order;
 import restaurant.common.domain.OrderItem;
@@ -305,6 +308,7 @@ public class OrderPreparePaymentFormController {
             List<Order> orders = findByCondition(null, null, false, user.getEmployee(), null);
             if (orders.isEmpty()) {
                 textAreaTables.setText("Trenutno nemate nenaplacenih porudzbina!");
+                btnSelectTable.setEnabled(false);
             } else {
                 StringBuilder message = new StringBuilder();
                 for (Order o : orders) {
@@ -333,5 +337,38 @@ public class OrderPreparePaymentFormController {
             }
         }
         return isReady;
+    }
+    
+    public static void btnUnpaiedReceiptsActionPerformed(){
+        User user = ApplicationSession.getInstance().getLoginUser();
+        Employee employee = user.getEmployee();
+        System.out.println("Employee: " + employee);
+        try {
+            List<Receipt> receipts = getAllUnpaiedReceiptsByEmployee(employee);
+            System.out.println("Lista neplacenih");
+            for (Receipt r : receipts) {
+                System.out.println(r);
+            }
+            if(receipts==null || receipts.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Nemate nenaplacenih racuna!");
+            }else{
+                new ReceiptUnpaiedForm(null, true).setVisible(true);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    public static List<Receipt> getAllUnpaiedReceiptsByEmployee(Employee employee) throws Exception {
+        Request request = new Request(Operation.RECEIPT_FIND_UNPAIED_BY_EMPLOYEE, employee);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<Receipt>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 }

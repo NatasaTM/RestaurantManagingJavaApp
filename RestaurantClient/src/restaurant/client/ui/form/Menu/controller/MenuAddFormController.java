@@ -1,6 +1,7 @@
 package restaurant.client.ui.form.Menu.controller;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -12,6 +13,7 @@ import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.MenuItemTableModel;
 import restaurant.common.domain.Menu;
+import restaurant.common.domain.MenuCategory;
 import restaurant.common.domain.MenuItem;
 import restaurant.common.domain.User;
 import restaurant.common.transfer.Operation;
@@ -33,6 +35,59 @@ public class MenuAddFormController {
             comboMenuItems.setModel(new DefaultComboBoxModel<>(getAllMenuItems().toArray()));
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    public static void populateComboMenuCategory(JComboBox comboMenuCategory){
+           try {
+            comboMenuCategory.setModel(new DefaultComboBoxModel<>(getAllMenuCategory().toArray()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        String all = "Sve kategorije";
+        comboMenuCategory.insertItemAt(all, 0);
+        comboMenuCategory.setSelectedIndex(0);
+    
+    }
+    
+    public static void selectMenuCategoryActionPerformed(JComboBox comboMenuCategory,JComboBox comboMenuItems){
+        MenuCategory menuCategory = null;
+        try {
+            if (!comboMenuCategory.getSelectedItem().toString().equals("Sve kategorije")) {
+                menuCategory = (MenuCategory) comboMenuCategory.getSelectedItem();
+
+                List<MenuItem> menuItems = getAllMenuItems();
+                 List<MenuItem> filteredItems = new ArrayList<>();
+               
+                   for(MenuItem m : menuItems){
+                  if(m.getMenuCategory().equals(menuCategory)){
+                      filteredItems.add(m);
+                  }
+              }
+               comboMenuItems.setModel(new DefaultComboBoxModel(filteredItems.toArray()));
+                
+             
+
+            } else {
+              List<MenuItem> menuItems = getAllMenuItems();
+               comboMenuItems.setModel(new DefaultComboBoxModel(menuItems.toArray()));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+     
+    
+    public static List<MenuCategory> getAllMenuCategory() throws Exception {
+        Request request = new Request(Operation.MENU_CATEGORY_GET_ALL);
+        Communication.getInstance().getSender().writeObject(request);
+        Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return (List<MenuCategory>) response.getResult();
+        } else {
+            throw new Exception(response.getException().getMessage());
         }
     }
     
@@ -96,6 +151,17 @@ public class MenuAddFormController {
         }
 
         setTableModel(tblMenuItems,menuItems);
+    }
+    
+    public static void btnSelectAllActionPerformed(JComboBox comboMenuItems,List<MenuItem> menuItems,JTable tblMenuItems){
+       int itemCount = comboMenuItems.getItemCount();
+       for(int i = 0;i<itemCount;i++){
+           MenuItem menuItem = (MenuItem) comboMenuItems.getItemAt(i);
+          if(!menuItems.contains(menuItem)) {
+              menuItems.add(menuItem);
+          }
+       }
+       setTableModel(tblMenuItems,menuItems);
     }
     
     public static void btnDeleteActionPerformed(JTable tblMenuItems,List<MenuItem> menuItems){

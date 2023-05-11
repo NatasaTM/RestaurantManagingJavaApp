@@ -43,6 +43,10 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         comboMenuItems = new javax.swing.JComboBox<>();
         btnAdd = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnDrinks = new javax.swing.JButton();
+        btnFood = new javax.swing.JButton();
+        btnAddAll = new javax.swing.JButton();
         btnDeleteMenuItem = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         txtError = new javax.swing.JTextField();
@@ -74,7 +78,7 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
         txtMenuName.setEditable(false);
         txtMenuName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj novo jelo"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj u jelovnik/kartu pica"));
 
         jLabel1.setText("Izbor jela:");
 
@@ -87,16 +91,49 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Filter:");
+
+        btnDrinks.setText("Pice");
+        btnDrinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDrinksActionPerformed(evt);
+            }
+        });
+
+        btnFood.setText("Hrana");
+        btnFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoodActionPerformed(evt);
+            }
+        });
+
+        btnAddAll.setText("Dodaj sve");
+        btnAddAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddAllActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDrinks)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFood))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboMenuItems, javax.swing.GroupLayout.PREFERRED_SIZE, 712, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(comboMenuItems, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(btnAddAll)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(btnAdd)
                 .addContainerGap())
         );
@@ -107,8 +144,14 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboMenuItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAdd)
+                    .addComponent(btnAddAll))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(btnDrinks)
+                    .addComponent(btnFood))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         btnDeleteMenuItem.setText("Obrisi jelo");
@@ -194,7 +237,7 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(comboMenu, 0, 428, Short.MAX_VALUE)
+                .addComponent(comboMenu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSelectMenu)
                 .addContainerGap())
@@ -258,11 +301,11 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancel)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -279,7 +322,7 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteMenuItemActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        MenuUpdateDeleteFormController.btnAddActionPerformed(comboMenuItems, menu, txtError, tblMenuItems, this);
+        MenuUpdateDeleteFormController.btnAddActionPerformed(comboMenuItems, txtError, tblMenuItems, this);
 
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -298,12 +341,27 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnSelectMenuActionPerformed
 
+    private void btnDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinksActionPerformed
+        MenuUpdateDeleteFormController.btnDrinksActionPerformed(comboMenuItems);
+    }//GEN-LAST:event_btnDrinksActionPerformed
+
+    private void btnFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoodActionPerformed
+        MenuUpdateDeleteFormController.btnFoodActionPerformed(comboMenuItems);
+    }//GEN-LAST:event_btnFoodActionPerformed
+
+    private void btnAddAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAllActionPerformed
+        MenuUpdateDeleteFormController.btnAddAllActionPerformed(comboMenuItems, txtError, tblMenuItems, this);
+    }//GEN-LAST:event_btnAddAllActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAddAll;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDeleteMenu;
     private javax.swing.JButton btnDeleteMenuItem;
+    private javax.swing.JButton btnDrinks;
+    private javax.swing.JButton btnFood;
     private javax.swing.ButtonGroup btnGroupIsActive;
     private javax.swing.JButton btnSelectMenu;
     private javax.swing.JButton btnSetIsActive;
@@ -311,6 +369,7 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
     private javax.swing.JComboBox<Object> comboMenuItems;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -344,6 +403,10 @@ public class MenuUpdateDeleteForm extends javax.swing.JDialog {
 
     public Menu getMenu() {
         return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
     
     

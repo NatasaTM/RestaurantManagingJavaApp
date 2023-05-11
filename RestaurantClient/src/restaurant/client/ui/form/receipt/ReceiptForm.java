@@ -195,6 +195,11 @@ public class ReceiptForm extends javax.swing.JDialog {
 
         btnConfirmCardNumber.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConfirmCardNumber.setText("Potvrdi");
+        btnConfirmCardNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmCardNumberActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -327,6 +332,10 @@ public class ReceiptForm extends javax.swing.JDialog {
     private void btnConfirmPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmPaymentActionPerformed
         ReceiptFormController.btnConfirmPaymentActionPerformed(btnConfirmPayment, comboPaymentMethodType, this, receipt, txtAreaMessage, txtCardNumber);
     }//GEN-LAST:event_btnConfirmPaymentActionPerformed
+
+    private void btnConfirmCardNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmCardNumberActionPerformed
+        ReceiptFormController.btnConfirmCardNumberActionPerformed(txtCardNumber);
+    }//GEN-LAST:event_btnConfirmCardNumberActionPerformed
 
     /**
      * @param args the command line arguments

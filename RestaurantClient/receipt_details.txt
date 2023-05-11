@@ -1,48 +1,6 @@
-Broj racuna: 58
-Datum i vreme izdavanja racuna: 2023-04-08T18:19:44
-Iznos racuna: 55270
+Broj racuna: 103
+Datum i vreme izdavanja racuna: 2023-05-07T15:23:31
+Iznos racuna: 506
 Porudzbine: 
-Porudzbina : ID: 31, Datum: 06.03.2023.  23:02:20, Ukupan iznos: 350.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Tost sendvic cena: 350 rsd, Kolicina:1]
-Porudzbina : ID: 32, Datum: 06.03.2023.  23:57:57, Ukupan iznos: 740.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pecurke na zaru sa prilogom cena: 740 rsd, Kolicina:1]
-Porudzbina : ID: 33, Datum: 06.03.2023.  23:59:25, Ukupan iznos: 500.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Palacinke sa borovnicama cena: 500 rsd, Kolicina:1]
-Porudzbina : ID: 34, Datum: 07.03.2023.  00:01:14, Ukupan iznos: 1500.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Palacinke sa borovnicama cena: 500 rsd, Kolicina:3]
-Porudzbina : ID: 35, Datum: 07.03.2023.  08:59:02, Ukupan iznos: 3140.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Palacinke sa borovnicama cena: 500 rsd, Kolicina:4, Jaja sa sunkom cena: 380 rsd, Kolicina:3]
-Porudzbina : ID: 36, Datum: 07.03.2023.  15:30:21, Ukupan iznos: 3870.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:3]
-Porudzbina : ID: 37, Datum: 10.03.2023.  09:02:51, Ukupan iznos: 5000.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Becka snicla1 cena: 1250 rsd, Kolicina:4]
-Porudzbina : ID: 38, Datum: 11.03.2023.  01:25:48, Ukupan iznos: 2930.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Tost sendvic cena: 350 rsd, Kolicina:1, Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:2]
-Porudzbina : ID: 39, Datum: 18.03.2023.  21:27:58, Ukupan iznos: 4760.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pecurke na zaru sa prilogom cena: 740 rsd, Kolicina:4, Omlet cena: 600 rsd, Kolicina:3]
-Porudzbina : ID: 61, Datum: 29.03.2023.  21:49:33, Ukupan iznos: 760.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Jaja sa sunkom cena: 380 rsd, Kolicina:2]
-Porudzbina : ID: 67, Datum: 02.04.2023.  19:19:37, Ukupan iznos: 2670.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Neko novo jelo cena: 890 rsd, Kolicina:3]
-Porudzbina : ID: 69, Datum: 02.04.2023.  19:20:46, Ukupan iznos: 1140.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Jaja sa sunkom cena: 380 rsd, Kolicina:3]
-Porudzbina : ID: 71, Datum: 02.04.2023.  21:41:49, Ukupan iznos: 4850.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Becka snicla1 cena: 1250 rsd, Kolicina:2, Coca cola cena: 200 rsd, Kolicina:3, Tost sendvic cena: 350 rsd, Kolicina:5]
-Porudzbina : ID: 82, Datum: 03.04.2023.  00:01:13, Ukupan iznos: 4450.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Neko novo jelo cena: 890 rsd, Kolicina:5]
-Porudzbina : ID: 88, Datum: 03.04.2023.  00:33:51, Ukupan iznos: 1480.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pecurke na zaru sa prilogom cena: 740 rsd, Kolicina:2]
-Porudzbina : ID: 96, Datum: 03.04.2023.  02:06:44, Ukupan iznos: 3720.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:2, Jaja sa sunkom cena: 380 rsd, Kolicina:3]
-Porudzbina : ID: 108, Datum: 03.04.2023.  09:17:00, Ukupan iznos: 3870.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:3]
-Porudzbina : ID: 125, Datum: 07.04.2023.  19:15:27, Ukupan iznos: 2980.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:2, Coca cola cena: 200 rsd, Kolicina:2]
-Porudzbina : ID: 126, Datum: 07.04.2023.  19:15:49, Ukupan iznos: 1480.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Pecurke na zaru sa prilogom cena: 740 rsd, Kolicina:2]
-Porudzbina : ID: 135, Datum: 08.04.2023.  10:25:24, Ukupan iznos: 5080.00, Status gotova: true, Status placena: true, Zaposleni: ID: 2, Ana Anic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
-Stavke porudzbine: [Becka snicla1 cena: 1250 rsd, Kolicina:2, Pileca Karadjordjeva Snicla cena: 1290 rsd, Kolicina:2]
-Podaci o placanju za racun: 58
-Broj placanja: 33
-Datum i vreme placanja: 2023-04-08T18:19:48
-Nacin placanja: CASH
+Porudzbina : ID: 181, Datum: 07.05.2023.  15:22:45, Ukupan iznos: 506.00, Status gotova: true, Status placena: false, Zaposleni: ID: 11, Marina Ivic, Sto = Broj stola: 5, Broj mesta za sedenje: 4,
+Stavke porudzbine: [Lav Premium cena: 253 rsd, Kolicina:2]

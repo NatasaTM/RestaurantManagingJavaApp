@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/receipt/ReceiptSearchForm.java</file>
-            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/mainForm/MainForm.java</file>
-            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/order/controller/OrderSearchFormController.java</file>
-            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/receipt/controller/ReceiptSearchFormController.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/receipt/controller/ReceiptUnpaiedFormController.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/order/OrderPreparePaymentForm.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/Menu/MenuAddForm.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/receipt/ReceiptUnpaiedForm.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/Menu/controller/MenuAddFormController.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/Menu/controller/MenuSearchFormController.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/Menu/controller/MenuUpdateDeleteFormController.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/Menu/MenuUpdateDeleteForm.java</file>
+            <file>file:/C:/Users/Win10/Documents/NetBeansProjects/ProjectRestaurantApp/RestaurantClient/src/restaurant/client/ui/form/order/controller/OrderPreparePaymentFormController.java</file>
         </group>
     </open-files>
 </project-private>

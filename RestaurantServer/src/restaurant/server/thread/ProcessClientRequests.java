@@ -409,6 +409,12 @@ public class ProcessClientRequests extends Thread {
                            response.setResult("Nalog je uspesno izmenjen");
                             break;
                         }
+                        case RECEIPT_FIND_UNPAIED_BY_EMPLOYEE:{
+                            Employee employee = (Employee) request.getArgument();
+                            List<Receipt> receipts = ReceiptController.getInstance().findUnpaiedReceiptsByEmployee(employee);
+                            response.setResult(receipts);
+                            break;
+                        }
 
                     }
                 } catch (Exception ex) {

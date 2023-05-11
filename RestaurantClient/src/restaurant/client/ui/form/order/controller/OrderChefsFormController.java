@@ -155,6 +155,9 @@ public class OrderChefsFormController {
             try {
 
                 updateOrderItem(o);
+               JTable table = orderChefsForm.getTblOrderItems();
+        table.setModel(new OrderItemChefTableModel(new ArrayList<OrderItem>(), null));
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

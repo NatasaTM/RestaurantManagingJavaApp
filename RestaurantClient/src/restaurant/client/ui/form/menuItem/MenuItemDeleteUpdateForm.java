@@ -17,6 +17,7 @@ public class MenuItemDeleteUpdateForm extends javax.swing.JDialog {
     public MenuItemDeleteUpdateForm(java.awt.Frame parent, boolean modal, MenuItem menuItem) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         this.menuItem = menuItem;
 
         populateComboCtagory();

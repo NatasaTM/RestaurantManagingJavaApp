@@ -2,12 +2,17 @@ package restaurant.server.ui.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import restaurant.server.communication.Server;
+import restaurant.server.connection.MyDatabaseConnection;
 import restaurant.server.session.Session;
 import restaurant.server.thread.ActiveClientsThread;
 import restaurant.server.thread.ProcessClientRequests;
 import restaurant.server.ui.ClientsTableModel.ClientsTableModel;
+import restaurant.server.ui.form.about.ServerAboutForm;
+import restaurant.server.ui.form.info.ServerInfoDialog;
 
 /**
  *
@@ -45,9 +50,16 @@ public class MainForm extends javax.swing.JFrame {
         tblClients = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuServer = new javax.swing.JMenu();
+        menuItemInfo = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        menuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         btnStartServer.setText("Start server");
         btnStartServer.addActionListener(new java.awt.event.ActionListener() {
@@ -79,9 +91,27 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblClients);
 
         menuServer.setText("Server");
+
+        menuItemInfo.setText("Info");
+        menuItemInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemInfoActionPerformed(evt);
+            }
+        });
+        menuServer.add(menuItemInfo);
+
         jMenuBar1.add(menuServer);
 
         menuHelp.setText("Help");
+
+        menuItemAbout.setText("About");
+        menuItemAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAboutActionPerformed(evt);
+            }
+        });
+        menuHelp.add(menuItemAbout);
+
         jMenuBar1.add(menuHelp);
 
         setJMenuBar(jMenuBar1);
@@ -144,6 +174,22 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnStopServerActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            MyDatabaseConnection.getInstance().closeConnection();
+        } catch (Exception ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void menuItemInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInfoActionPerformed
+       new ServerInfoDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_menuItemInfoActionPerformed
+
+    private void menuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAboutActionPerformed
+        new ServerAboutForm(this, true).setVisible(true);
+    }//GEN-LAST:event_menuItemAboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -156,6 +202,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuItemAbout;
+    private javax.swing.JMenuItem menuItemInfo;
     private javax.swing.JMenu menuServer;
     private javax.swing.JTable tblClients;
     // End of variables declaration//GEN-END:variables

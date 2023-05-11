@@ -2,10 +2,10 @@ package restaurant.server.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import restaurant.common.domain.Employee;
 import restaurant.common.domain.Order;
 import restaurant.common.domain.Receipt;
 import restaurant.server.repository.GenericRepository;
-import restaurant.server.repository.impl.OrderItemRepositoryImpl;
 import restaurant.server.repository.impl.OrderRepositoryImpl;
 import restaurant.server.repository.impl.ReceiptRepositoryImpl;
 import restaurant.server.service.ReceiptService;
@@ -64,6 +64,31 @@ public class ReceiptServiceImpl implements ReceiptService {
         String query = " SELECT `receiptId`,`date`,`totalAmount` FROM `receipt` \n"
                 + "WHERE `receiptId` NOT IN (SELECT `receiptId` FROM `payment`)";
         return receiptRepository.findByQuery(query);
+    }
+
+    @Override
+    public List<Receipt> findUnpaiedReceiptsByEmployee(Employee employee) throws Exception {
+        List<Receipt> receipts = findUnpaiedReceipts();
+        List<Receipt> filteredReceipts = new ArrayList<>();
+
+        for (Receipt receipt : receipts) {
+            List<Order> orders = new ArrayList<>(receipt.getOrders());
+
+            for (Order order : orders) {
+                Order fullOrder = OrderRepositoryImpl.getInstance().findById(order.getOrderId());
+                order.setEmployee(fullOrder.getEmployee());
+            }
+
+            for (Order order : orders) {
+                if (order.getEmployee().equals(employee)) {
+                    filteredReceipts.add(receipt);
+                    break;
+                }
+            }
+        }
+
+        return filteredReceipts;
+
     }
 
 }

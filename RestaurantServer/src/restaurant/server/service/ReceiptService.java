@@ -1,6 +1,7 @@
 package restaurant.server.service;
 
 import java.util.List;
+import restaurant.common.domain.Employee;
 import restaurant.common.domain.Receipt;
 
 /**
@@ -12,4 +13,5 @@ public interface ReceiptService {
     List<Receipt> getAll() throws Exception;
     Receipt findById(Long id) throws Exception;
     List<Receipt> findUnpaiedReceipts() throws Exception;
+    List<Receipt> findUnpaiedReceiptsByEmployee(Employee employee) throws Exception;
 }

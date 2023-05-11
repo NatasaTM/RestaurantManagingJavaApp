@@ -3,6 +3,8 @@ package restaurant.client.ui.form.Menu.controller;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,8 +16,10 @@ import javax.swing.JTextField;
 import restaurant.client.communication.Communication;
 import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.component.table.model.MenuItemTableModel;
+import restaurant.client.ui.form.Menu.MenuUpdateDeleteForm;
 import restaurant.common.domain.Menu;
 import restaurant.common.domain.MenuItem;
+import restaurant.common.domain.MenuItemType;
 import restaurant.common.domain.User;
 import restaurant.common.transfer.Operation;
 import restaurant.common.transfer.Request;
@@ -50,6 +54,41 @@ public class MenuUpdateDeleteFormController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static void btnDrinksActionPerformed(JComboBox comboMenuItems) {
+        try {
+            List<MenuItem> menuItems = getAllMenuItems();
+            List<MenuItem> drinks = new ArrayList<>();
+            for (MenuItem m : menuItems) {
+                if (m.getMenuItemType().equals(MenuItemType.DRINKS)) {
+                    drinks.add(m);
+                }
+            }
+            comboMenuItems.setModel(new DefaultComboBoxModel(drinks.toArray()));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public static void btnFoodActionPerformed(JComboBox comboMenuItems) {
+        try {
+            List<MenuItem> menuItems = getAllMenuItems();
+            List<MenuItem> drinks = new ArrayList<>();
+            for (MenuItem m : menuItems) {
+                if (m.getMenuItemType().equals(MenuItemType.FOOD)) {
+                    drinks.add(m);
+                }
+            }
+            comboMenuItems.setModel(new DefaultComboBoxModel(drinks.toArray()));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }
 
     public static void setTableModel(Menu menu, JTable tblMenuItems) {
@@ -110,9 +149,10 @@ public class MenuUpdateDeleteFormController {
 
     }
 
-    public static void btnSelectMenuActionPerformed(Menu menu, JComboBox comboMenu, JTextField txtMenuName, JRadioButton rbtnActive, JRadioButton rbtnNonActive, JDialog menuUDForm, JTable tblMenuItems, JButton btnSetIsActive, JButton btnAdd, JTextField txtError, JComboBox comboMenuItems) {
+    public static void btnSelectMenuActionPerformed(Menu menu, JComboBox comboMenu, JTextField txtMenuName, JRadioButton rbtnActive, JRadioButton rbtnNonActive, MenuUpdateDeleteForm menuUpdateDeleteForm, JTable tblMenuItems, JButton btnSetIsActive, JButton btnAdd, JTextField txtError, JComboBox comboMenuItems) {
         menu = (Menu) comboMenu.getSelectedItem();
-        prepareView(menuUDForm, menu, txtMenuName, rbtnActive, rbtnNonActive, comboMenu, tblMenuItems);
+        menuUpdateDeleteForm.setMenu(menu);
+        prepareView(menuUpdateDeleteForm, menu, txtMenuName, rbtnActive, rbtnNonActive, comboMenu, tblMenuItems);
         setTableModel(menu, tblMenuItems);
         //setTableModel();
         btnSetIsActive.setEnabled(true);
@@ -193,30 +233,68 @@ public class MenuUpdateDeleteFormController {
         }
     }
 
-    public static void btnAddActionPerformed(JComboBox comboMenuItems, Menu menu, JTextField txtError, JTable tblMenuItems, JDialog menuUDForm) {
+    public static void btnAddActionPerformed(JComboBox comboMenuItems, JTextField txtError, JTable tblMenuItems, MenuUpdateDeleteForm menuUpdateDeleteForm) {
         MenuItem menuItem = (MenuItem) comboMenuItems.getSelectedItem();
+        Menu menu = menuUpdateDeleteForm.getMenu();
         try {
             addMenuItemToMenu(menuItem, menu);
 
             txtError.setText("Jelo je uspesno dodato u jelovnik.");
-            JOptionPane.showMessageDialog(menuUDForm, "Jelo je uspesno dodato u jelovnik");
+            JOptionPane.showMessageDialog(menuUpdateDeleteForm, "Jelo je uspesno dodato u jelovnik");
             setTableModel(menu, tblMenuItems);
 
         } catch (Exception ex) {
             ex.printStackTrace();
             txtError.setForeground(Color.red);
             txtError.setText(ex.getMessage());
-            JOptionPane.showMessageDialog(menuUDForm, ex.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(menuUpdateDeleteForm, ex.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public static void addMenuItemToMenu(MenuItem menuItem, Menu menu) throws Exception {
+    public static void btnAddAllActionPerformed(JComboBox comboMenuItems, JTextField txtError, JTable tblMenuItems, MenuUpdateDeleteForm menuUpdateDeleteForm) {
+
+        Menu menu = menuUpdateDeleteForm.getMenu();
+        List<MenuItem> menuItems = menu.getMenuItems();
+        List<MenuItem> newItems = new ArrayList<>();
+        MenuItem menuItem = null;
+        int itemCount = comboMenuItems.getItemCount();
+        for (int i = 0; i < itemCount; i++) {
+            menuItem = (MenuItem) comboMenuItems.getItemAt(i);
+            if (!menuItems.contains(menuItem)) {
+                newItems.add(menuItem);
+            }
+
+        }
+        
+        try {
+            for(MenuItem m : newItems){
+              addMenuItemToMenu(m, menu);  
+            }
+            
+            txtError.setText("Jela su uspesno dodata u jelovnik.");
+            JOptionPane.showMessageDialog(menuUpdateDeleteForm, "Jela su uspesno dodata u jelovnik");
+            setTableModel(menu, tblMenuItems);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            txtError.setForeground(Color.red);
+            txtError.setText(ex.getMessage());
+            JOptionPane.showMessageDialog(menuUpdateDeleteForm, ex.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public static Response addMenuItemToMenu(MenuItem menuItem, Menu menu) throws Exception {
         List<Object> arguments = new ArrayList<>();
         arguments.add(menuItem);
         arguments.add(menu);
         Request request = new Request(Operation.MENU_ADD_MENU_ITEM, arguments);
         Communication.getInstance().getSender().writeObject(request);
         Response response = (Response) Communication.getInstance().getReceiver().readObject();
+        if (response.getException() == null) {
+            return null;
+        } else {
+            throw new Exception(response.getException().getMessage());
+        }
     }
 
     public static void btnDeleteMenuItemActionPerformed(JTextField txtError, JTable tblMenuItems, Menu menu, JDialog menuUDForm, JComboBox comboMenu) {

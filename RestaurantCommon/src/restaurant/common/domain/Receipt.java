@@ -10,7 +10,8 @@ import java.util.List;
  *
  * @author Natasa Todorov Markovic
  */
-public class Receipt implements Serializable{
+public class Receipt implements Serializable {
+
     private Long id;
     private LocalDateTime date;
     private BigDecimal amount;
@@ -39,8 +40,6 @@ public class Receipt implements Serializable{
     public Receipt(Long id) {
         this.id = id;
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -76,9 +75,9 @@ public class Receipt implements Serializable{
 
     @Override
     public String toString() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy."+" "+" HH:mm:ss");
-        return "Receipt{" + "id=" + id + ", date=" + date.format(dtf) + ", amount=" + amount + ", orders=" + orders + '}';
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy." + " " + " HH:mm:ss");
+//        return "Receipt{" + "id=" + id + ", date=" + date.format(dtf) + ", amount=" + amount + ", orders=" + orders + '}';
+        return "Receipt{" + "id=" + id + ", amount=" + amount + ", orders=" + orders + '}';
     }
-    
-    
+
 }

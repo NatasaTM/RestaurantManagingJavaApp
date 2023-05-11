@@ -73,6 +73,7 @@ public class EmployeeAddFormController {
             txtName.setText("");
             txtLastname.setText("");
             txtAdress.setText("");
+            dateChooser.setDate(null);
             
         }
         
