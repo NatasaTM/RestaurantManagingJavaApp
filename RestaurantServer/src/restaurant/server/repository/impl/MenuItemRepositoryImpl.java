@@ -38,7 +38,7 @@ public class MenuItemRepositoryImpl implements GenericRepository<MenuItem, Integ
                 String categoryName = rs.getString("categoryName");
                 Integer categoryId = rs.getInt("categoryId");
                 MenuCategory category = new MenuCategory(categoryId, categoryName);
-                MenuItem menuItem = new MenuItem(id, menuItemname, description, price, category,menuItemType);
+                MenuItem menuItem = new MenuItem(id, menuItemname, description, price, category, menuItemType);
                 menuItems.add(menuItem);
             }
 
@@ -67,12 +67,12 @@ public class MenuItemRepositoryImpl implements GenericRepository<MenuItem, Integ
                 String menuItemname = rs.getString("menuItemName");
                 String description = rs.getString("description");
                 BigDecimal price = rs.getBigDecimal("price");
-                 MenuItemType menuItemType = Enum.valueOf(MenuItemType.class, rs.getObject("menuItemType").toString());
+                MenuItemType menuItemType = Enum.valueOf(MenuItemType.class, rs.getObject("menuItemType").toString());
 
                 String categoryName = rs.getString("categoryName");
                 Integer categoryId = rs.getInt("categoryId");
                 MenuCategory category = new MenuCategory(categoryId, categoryName);
-                MenuItem menuItem = new MenuItem(id, menuItemname, description, price, category,menuItemType);
+                MenuItem menuItem = new MenuItem(id, menuItemname, description, price, category, menuItemType);
                 menuItems.add(menuItem);
 
             }
@@ -145,41 +145,6 @@ public class MenuItemRepositoryImpl implements GenericRepository<MenuItem, Integ
 
     }
 
-//    @Override
-//    public List<MenuItem> getByCategory(String name) throws Exception {
-//        try {
-//            List<MenuItem> menuItems = new ArrayList<>();
-//            Connection connection = MyDatabaseConnection.getInstance().getConnection();
-//            String query = "SELECT m.menuItemId,m.name menuItemName,m.description,m.price,m.`menuItemType`, c.categoryId,c.categoryName FROM menuItem m\n"
-//                    + "JOIN menucategory c ON c.categoryId = m.categoryId\n"
-//                    + "WHERE c.categoryName='" + name + "'";
-//            Statement statement = connection.createStatement();
-//            ResultSet rs = statement.executeQuery(query);
-//            while (rs.next()) {
-//                Integer id = rs.getInt("menuItemId");
-//                String menuItemname = rs.getString("menuItemName");
-//                String description = rs.getString("description");
-//                BigDecimal price = rs.getBigDecimal("price");
-//                MenuItemType menuItemType = Enum.valueOf(MenuItemType.class, rs.getObject("menuItemType").toString());
-//
-//                String categoryName = rs.getString("categoryName");
-//                Integer categoryId = rs.getInt("categoryId");
-//                MenuCategory category = new MenuCategory(categoryId, categoryName);
-//                MenuItem menuItem = new MenuItem(id, menuItemname, description, price, category,menuItemType);
-//                menuItems.add(menuItem);
-//
-//            }
-//            rs.close();
-//            statement.close();
-//
-//            return menuItems;
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//
-//            throw new Exception("Greska u izvrsenju metode getByCategory() klase MenuItemRepository ->" + e.getMessage());
-//        }
-//    }
-
     @Override
     public void delete(MenuItem menuItem) throws Exception {
 
@@ -228,10 +193,10 @@ public class MenuItemRepositoryImpl implements GenericRepository<MenuItem, Integ
                     + "JOIN `menucategory` c ON c.`categoryId`=mi.`categoryId`\n"
                     + "WHERE mi.`menuItemId`=?";
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 BigDecimal price = rs.getBigDecimal("price");
@@ -239,7 +204,7 @@ public class MenuItemRepositoryImpl implements GenericRepository<MenuItem, Integ
                 String categoryName = rs.getString("categoryName");
                 MenuCategory menuCategory = new MenuCategory(categoryId, categoryName);
                 MenuItemType menuItemType = Enum.valueOf(MenuItemType.class, rs.getObject("menuItemType").toString());
-                menuItem = new MenuItem(id, name, description, price, menuCategory,menuItemType);
+                menuItem = new MenuItem(id, name, description, price, menuCategory, menuItemType);
             }
             rs.close();
             preparedStatement.close();

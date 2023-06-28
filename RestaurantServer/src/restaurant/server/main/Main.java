@@ -2,6 +2,7 @@ package restaurant.server.main;
 
 import restaurant.server.communication.Server;
 import restaurant.server.ui.form.MainForm;
+import restaurant.server.ui.form.login.LoginForm;
 
 /**
  *
@@ -16,7 +17,8 @@ public class Main {
 //        Server server = new Server();
 //        server.start();
 
-        new MainForm().setVisible(true);
+      //  new MainForm().setVisible(true);
+      new LoginForm().setVisible(true);
     }
 
 }

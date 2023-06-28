@@ -49,6 +49,7 @@ public class ProcessClientRequests extends Thread {
     private ObjectInputStream receiver;
     private boolean signal;
     private String clientName;
+    private String clientUsername;
     private Date loginTime;
 
     public ProcessClientRequests(Socket socket) {
@@ -74,12 +75,19 @@ public class ProcessClientRequests extends Thread {
                         case LOGIN: {
                             User u = (User) request.getArgument();
                             User user = (User) LoginController.getInstance().login(u.getUsername(), u.getPassword());
-                            response.setResult(user);
-                            setClientName(user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
-                            setLoginTime(new Date());
-                            //Session.getInstance().getClients().add(this);
-                            Session.getInstance().addClient(this);
+                            if (Session.getInstance().isClientLoggedIn(u)) {
+                                response.setException(new Exception("Klijent sa tim kredencijalima je vec ulogovan na sistem!"));
+                            } else {
+                                response.setResult(user);
+                                setClientName(user.getEmployee().getFirstname() + " " + user.getEmployee().getLastname());
+                                setClientUsername(user.getUsername());
+                                setLoginTime(new Date());
+                                //Session.getInstance().getClients().add(this);
+                                Session.getInstance().addClient(this);
+
+                            }
                             break;
+
                         }
 
                         case END: {
@@ -390,26 +398,26 @@ public class ProcessClientRequests extends Thread {
                             response.setResult(users);
                             break;
                         }
-                        case USER_FIND_BY_ID:{
+                        case USER_FIND_BY_ID: {
                             String username = (String) request.getArgument();
                             User user = LoginController.getInstance().findUserById(username);
                             response.setResult(user);
                             break;
                         }
-                        
-                        case USER_DELETE:{
+
+                        case USER_DELETE: {
                             User user = (User) request.getArgument();
                             LoginController.getInstance().deleteUser(user);
                             response.setResult("Nalog je uspesno izbrisan");
                             break;
                         }
-                        case USER_UPDATE:{
-                           User user = (User) request.getArgument();
-                           LoginController.getInstance().updateUser(user);
-                           response.setResult("Nalog je uspesno izmenjen");
+                        case USER_UPDATE: {
+                            User user = (User) request.getArgument();
+                            LoginController.getInstance().updateUser(user);
+                            response.setResult("Nalog je uspesno izmenjen");
                             break;
                         }
-                        case RECEIPT_FIND_UNPAIED_BY_EMPLOYEE:{
+                        case RECEIPT_FIND_UNPAIED_BY_EMPLOYEE: {
                             Employee employee = (Employee) request.getArgument();
                             List<Receipt> receipts = ReceiptController.getInstance().findUnpaiedReceiptsByEmployee(employee);
                             response.setResult(receipts);
@@ -455,6 +463,14 @@ public class ProcessClientRequests extends Thread {
 
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public String getClientUsername() {
+        return clientUsername;
+    }
+
+    public void setClientUsername(String clientUsername) {
+        this.clientUsername = clientUsername;
     }
 
     @Override

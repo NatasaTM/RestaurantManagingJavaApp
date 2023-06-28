@@ -365,7 +365,7 @@ public class OrderSearchForm extends javax.swing.JDialog {
     }//GEN-LAST:event_tblOrdersMouseClicked
 
     private void btnSelectTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTableActionPerformed
-             OrderSearchFormController.btnSelectTableActionPerformed(this, comboTable, tblOrders);
+             OrderSearchFormController.btnSelectTableActionPerformed(listOrderItems, this, comboTable, tblOrders);
 
     }//GEN-LAST:event_btnSelectTableActionPerformed
 
@@ -374,37 +374,37 @@ public class OrderSearchForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSelectEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectEmployeeActionPerformed
-            OrderSearchFormController.btnSelectEmployeeActionPerformed(this, comboEmployee, tblOrders);
+            OrderSearchFormController.btnSelectEmployeeActionPerformed(listOrderItems, this, comboEmployee, tblOrders);
 
     }//GEN-LAST:event_btnSelectEmployeeActionPerformed
 
     private void btnPaiedSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaiedSelectActionPerformed
-          OrderSearchFormController.btnPaiedSelectActionPerformed(this, rbtnPaied, tblOrders, rbtnNonPaied);
+          OrderSearchFormController.btnPaiedSelectActionPerformed(listOrderItems, this, rbtnPaied, tblOrders, rbtnNonPaied);
 
     }//GEN-LAST:event_btnPaiedSelectActionPerformed
 
     private void btnPaiedClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaiedClearActionPerformed
-        OrderSearchFormController.btnPaiedClearActionPerformed(this, rbtnPaied, rbtnNonPaied, groupPaied, tblOrders);
+        OrderSearchFormController.btnPaiedClearActionPerformed(listOrderItems, this, rbtnPaied, rbtnNonPaied, groupPaied, tblOrders);
 
     }//GEN-LAST:event_btnPaiedClearActionPerformed
 
     private void btnReadySelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadySelectActionPerformed
-        OrderSearchFormController.btnReadySelectActionPerformed(rbtnReady, this, tblOrders, rbtnNonReady);
+        OrderSearchFormController.btnReadySelectActionPerformed(listOrderItems, rbtnReady, this, tblOrders, rbtnNonReady);
 
     }//GEN-LAST:event_btnReadySelectActionPerformed
 
     private void btnReadyClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadyClearActionPerformed
-        OrderSearchFormController.btnReadyClearActionPerformed(this, groupReady, tblOrders);
+        OrderSearchFormController.btnReadyClearActionPerformed(listOrderItems, this, groupReady, tblOrders);
 
     }//GEN-LAST:event_btnReadyClearActionPerformed
 
     private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
-       OrderSearchFormController.btnClearAllActionPerformed(tblOrders, this, comboEmployee, comboTable, groupPaied, groupReady, dateChooser);
+       OrderSearchFormController.btnClearAllActionPerformed(listOrderItems, tblOrders, this, comboEmployee, comboTable, groupPaied, groupReady, dateChooser);
 
     }//GEN-LAST:event_btnClearAllActionPerformed
 
     private void btnDateSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDateSelectActionPerformed
-        OrderSearchFormController.btnDateSelectActionPerformed(orders, tblOrders, this, dateChooser, rbtnNonPaied, rbtnPaied, comboEmployee);
+        OrderSearchFormController.btnDateSelectActionPerformed(listOrderItems, orders, tblOrders, this, dateChooser, rbtnNonPaied, rbtnPaied, comboEmployee);
 
     }//GEN-LAST:event_btnDateSelectActionPerformed
 

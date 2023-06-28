@@ -1,17 +1,11 @@
 package restaurant.client.ui.form.mainForm;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import restaurant.client.communication.Communication;
-import restaurant.client.session.ApplicationSession;
 import restaurant.client.ui.form.Menu.MenuAddForm;
 import restaurant.client.ui.form.Menu.MenuSearchForm;
 import restaurant.client.ui.form.Menu.MenuUpdateDeleteForm;
@@ -19,8 +13,6 @@ import restaurant.client.ui.form.employee.EmployeeAccountUpdateDeleteForm;
 import restaurant.client.ui.form.employee.EmployeeAddForm;
 import restaurant.client.ui.form.employee.EmployeeCreateAccountForm;
 import restaurant.client.ui.form.employee.EmployeeSearchForm;
-import restaurant.client.ui.form.login.controller.LoginFormController;
-import restaurant.client.ui.form.loginForm.LogInForm;
 import restaurant.client.ui.form.mainForm.controller.MainFormController;
 import restaurant.client.ui.form.menuItem.MenuItemAddForm;
 import restaurant.client.ui.form.menuItem.MenuItemSearchForm;
@@ -31,7 +23,6 @@ import restaurant.client.ui.form.order.OrderPreparePaymentForm;
 import restaurant.client.ui.form.order.OrderSearchForm;
 import restaurant.client.ui.form.receipt.ReceiptSearchForm;
 import restaurant.client.ui.form.table.TableSearchForm;
-import restaurant.common.domain.User;
 import restaurant.common.transfer.Operation;
 import restaurant.common.transfer.Request;
 import restaurantapp.ui.form.menuCategory.MenuCategoryAddForm;
@@ -726,5 +717,10 @@ public class MainForm extends javax.swing.JFrame {
     public JMenu getMenuMeals() {
         return menuMeals;
     }
+
+    public JMenu getMenuReceipt() {
+        return menuReceipt;
+    }
+    
 
 }

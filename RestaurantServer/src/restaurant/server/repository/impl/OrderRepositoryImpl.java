@@ -121,34 +121,9 @@ public class OrderRepositoryImpl implements GenericRepository<Order, Long> {
 
             addOrderItemsToOrder(query, order);
 
-//            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//            List<OrderItem> orderItems = order.getOrderItems();
-//            for (int i = 0; i < orderItems.size(); i++) {
-//                preparedStatement.setLong(1, order.getOrderId());
-//                preparedStatement.setInt(2, orderItems.get(i).getMenuItem().getId());
-//                preparedStatement.setInt(3, orderItems.get(i).getQuantity());
-//
-//                preparedStatement.executeUpdate();
-//
-//                rs = preparedStatement.getGeneratedKeys();
-//                if (rs.next()) {
-//                    orderItems.get(i).setOrderItemId(rs.getInt(1));
-//                }
-//
-//            }
-//            BigDecimal price = BigDecimal.valueOf(0);
-//            for (int i = 0; i < orderItems.size(); i++) {
-//                price = price.add(orderItems.get(i).getMenuItem().getPrice().multiply(BigDecimal.valueOf((double) orderItems.get(i).getQuantity())));
-//            }
             query = "UPDATE `order` SET `totalAmount`=? WHERE `orderId`=?";
             calculateTotalPrice(order, query);
 
-//            TableRepositoryImpl tableRepositoryImpl = new TableRepositoryImpl();
-//            tableRepositoryImpl.setIsAvailable(order.getTable(), false);
-//            preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setBigDecimal(1, price);
-//            preparedStatement.setLong(2, order.getOrderId());
-//            preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Greska u izvrsenju metode add() klase OrderRepository: " + e.getMessage());

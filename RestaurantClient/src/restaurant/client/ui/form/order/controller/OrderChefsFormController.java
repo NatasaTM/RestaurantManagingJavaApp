@@ -103,8 +103,8 @@ public class OrderChefsFormController {
 
         JTable tblOrder = orderChefsForm.getTblOrder();
         int selectedRow = orderChefsForm.getSelectedRowIndex();
-        CustomTableCellRenderer renderer = new CustomTableCellRenderer(selectedRow);
-        tblOrder.setDefaultRenderer(Object.class, renderer);
+       // CustomTableCellRenderer renderer = new CustomTableCellRenderer(selectedRow);
+       // tblOrder.setDefaultRenderer(Object.class, renderer);
 
         // Order order = orderChefsForm.getOrder();
         selectedRow = tblOrder.getSelectedRow();

@@ -70,5 +70,10 @@ public class OrderChefTableModel extends AbstractTableModel {
 
         return null;
     }
+    
+    public void updateTable(List<Order> orders){
+        this.orders = orders;
+        fireTableDataChanged();
+    }
 
 }

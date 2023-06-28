@@ -6,8 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import restaurant.client.ui.form.order.controller.OrderBartenderFormController;
+import restaurant.client.ui.form.order.thread.OrderBartenderRefreshThread;
 import restaurant.common.domain.Order;
 
 /**
@@ -15,10 +15,13 @@ import restaurant.common.domain.Order;
  * @author Natasa Todorov Markovic
  */
 public class OrderBartenderForm extends javax.swing.JDialog {
+
     private List<Order> orders;
-    private Timer refreshTimer;
+    //  private Timer refreshTimer;
     private Order order;
+    private OrderBartenderRefreshThread orderBartenderRefreshThread;
     private int selectedRowIndex = -1;
+
     /**
      * Creates new form OrderBartenderForm
      */
@@ -28,24 +31,26 @@ public class OrderBartenderForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         orders = new ArrayList<>();
         prepareView();
-        setOrderTableModel();
-        tblOrder.getSelectionModel().addListSelectionListener(e -> {
-        selectedRowIndex = tblOrder.getSelectedRow();
-        // highlight selected row
-        tblOrder.repaint();
-    });
-        
-
-        refreshTimer = new Timer(1000, e -> {
-
-            setOrderTableModel();
-            // re-highlight selected row
-        if (selectedRowIndex >= 0) {
-            tblOrder.repaint(tblOrder.getCellRect(selectedRowIndex, 0, true));
-        }
-
-        });
-        refreshTimer.start();
+//        setOrderTableModel();
+//        tblOrder.getSelectionModel().addListSelectionListener(e -> {
+//        selectedRowIndex = tblOrder.getSelectedRow();
+//        // highlight selected row
+//        tblOrder.repaint();
+//    });
+//        
+//
+//        refreshTimer = new Timer(1000, e -> {
+//
+//            setOrderTableModel();
+//            // re-highlight selected row
+//        if (selectedRowIndex >= 0) {
+//            tblOrder.repaint(tblOrder.getCellRect(selectedRowIndex, 0, true));
+//        }
+//
+//        });
+//        refreshTimer.start();
+        orderBartenderRefreshThread = new OrderBartenderRefreshThread(this);
+        orderBartenderRefreshThread.start();
     }
 
     /**
@@ -196,7 +201,6 @@ public class OrderBartenderForm extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUpdate;
@@ -208,7 +212,7 @@ public class OrderBartenderForm extends javax.swing.JDialog {
     private javax.swing.JTable tblOrderItems;
     // End of variables declaration//GEN-END:variables
 
-    private void setOrderTableModel() {
+    public void setOrderTableModel() {
         OrderBartenderFormController.setTableModel(orders, tblOrder);
     }
 
@@ -259,9 +263,5 @@ public class OrderBartenderForm extends javax.swing.JDialog {
     public int getSelectedRowIndex() {
         return selectedRowIndex;
     }
-
-   
-
-    
 
 }

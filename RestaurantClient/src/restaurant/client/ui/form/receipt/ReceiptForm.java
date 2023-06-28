@@ -330,7 +330,7 @@ public class ReceiptForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSelectPayMethodActionPerformed
 
     private void btnConfirmPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmPaymentActionPerformed
-        ReceiptFormController.btnConfirmPaymentActionPerformed(btnConfirmPayment, comboPaymentMethodType, this, receipt, txtAreaMessage, txtCardNumber);
+        ReceiptFormController.btnConfirmPaymentActionPerformed(btnSelectPayMethod, btnConfirmCardNumber, btnConfirmPayment, comboPaymentMethodType, this, receipt, txtAreaMessage, txtCardNumber);
     }//GEN-LAST:event_btnConfirmPaymentActionPerformed
 
     private void btnConfirmCardNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmCardNumberActionPerformed

@@ -19,7 +19,7 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
         try {
 
             List<City> cities = new ArrayList<>();
-            
+
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
 
             String query = "select * from city order by `name`";
@@ -35,7 +35,6 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
 
             rs.close();
             statement.close();
-            
 
             return cities;
 
@@ -67,7 +66,6 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
 
             rs.close();
             statement.close();
-           
 
             return cities;
 
@@ -81,7 +79,7 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
     @Override
     public void add(City city) throws Exception {
         try {
-           Connection connection = MyDatabaseConnection.getInstance().getConnection();
+            Connection connection = MyDatabaseConnection.getInstance().getConnection();
             String query = "insert into city (zipcode,`name`) values(?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, city.getZipcode());
@@ -89,7 +87,7 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -98,18 +96,64 @@ public class CityRepositoryImpl implements GenericRepository<City, Long> {
     }
 
     @Override
-    public void update(City entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void update(City city) throws Exception {
+        try {
+            String query = "update `city` set `zipcode`=?,`name`=? where `zipcode`=?";
+            Connection connection = MyDatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, city.getZipcode());
+            preparedStatement.setString(2, city.getName());
+            preparedStatement.setLong(3, city.getZipcode());
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Greska u izvrsenju metode update() klase CityRepository ->" + e.getMessage());
+        }
     }
 
     @Override
-    public void delete(City entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(City city) throws Exception {
+        try {
+            String query = "DELETE FROM `city` WHERE `zipcode`=?";
+            Connection connection = MyDatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, city.getZipcode());
+            preparedStatement.executeUpdate();
+            
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Greska u izvrsenju metode delete() klase CityRepository ->" + e.getMessage());
+        }
     }
 
     @Override
     public City findById(Long id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            City city = null;
+            String query = "SELECT `zipcode`,`name` FROM `city` WHERE `zipcode`=?" ;
+            Connection connection = MyDatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                Long zipcodeRs = rs.getLong("zipcode");
+                String name = rs.getString("name");
+                
+                city = new City(zipcodeRs, name);
+            }
+            rs.close();
+            preparedStatement.close();
+            return city;
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Greska u izvrsenju metode findById() klase CityRepository ->" + e.getMessage());
+        }
     }
 
 }

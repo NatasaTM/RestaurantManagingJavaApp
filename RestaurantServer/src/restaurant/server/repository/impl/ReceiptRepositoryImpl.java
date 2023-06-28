@@ -8,7 +8,6 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import restaurant.common.domain.Order;
-import restaurant.common.domain.OrderItem;
 import restaurant.server.connection.MyDatabaseConnection;
 
 /**
@@ -134,10 +133,10 @@ public class ReceiptRepositoryImpl implements GenericRepository<Receipt, Long> {
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-               Long receiptId = rs.getLong("receiptId");
-               Receipt receipt = findById(receiptId);
-               receipts.add(receipt);
+            while (rs.next()) {
+                Long receiptId = rs.getLong("receiptId");
+                Receipt receipt = findById(receiptId);
+                receipts.add(receipt);
             }
             rs.close();
             statement.close();
@@ -146,7 +145,7 @@ public class ReceiptRepositoryImpl implements GenericRepository<Receipt, Long> {
             e.printStackTrace();
             throw new Exception("Greska pri izvrsenju metode findByQuery() klase ReceiptRepositoryImpl: " + e.getMessage());
         }
-        
+
     }
 
     private void calculateTotalAmount(Receipt receipt, String query) {

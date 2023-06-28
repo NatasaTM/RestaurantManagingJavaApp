@@ -1,5 +1,7 @@
 package restaurant.client.ui.form.employee;
 
+import java.util.ArrayList;
+import java.util.List;
 import restaurant.client.ui.form.employee.controller.EmployeeCreateAccountFormController;
 import restaurant.common.domain.Employee;
 import restaurant.common.domain.Role;
@@ -11,7 +13,7 @@ import restaurant.common.domain.Role;
 public class EmployeeCreateAccountForm extends javax.swing.JDialog {
 
     private Employee employee;
-    private Role role;
+    private List<Role> roles;
 
     /**
      * Creates new form EmployeeCreateAccountForm
@@ -20,8 +22,10 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        roles = new ArrayList<>();
         prepareView();
-        populateComboRoles();
+       // populateComboRoles();
+       setListRoleModel();
         setTableModel();
 
     }
@@ -44,8 +48,9 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
-        comboRoles = new javax.swing.JComboBox<>();
         btnSelectRole = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listRoles = new javax.swing.JList<>();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -81,14 +86,19 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
 
         jLabel3.setText("Radno mesto:");
 
-        comboRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnSelectRole.setText("Izaberi");
         btnSelectRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSelectRoleActionPerformed(evt);
             }
         });
+
+        listRoles.setModel(new javax.swing.AbstractListModel<Object>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(listRoles);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -108,10 +118,11 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(comboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(btnSelectRole)
-                .addContainerGap(182, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSelectRole)
+                        .addGap(12, 12, 12)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +137,11 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSelectRole)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSelectRole))
+                    .addComponent(jLabel3))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         btnSave.setText("Sacuvaj");
@@ -157,22 +168,22 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSave))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(51, 51, 51)
                         .addComponent(txtEmployeeSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSelectEmployee)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                        .addComponent(btnSelectEmployee))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancel)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSave)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,12 +196,12 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txtEmployeeSelected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnSave))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(btnSave)
+                    .addComponent(btnCancel))
+                .addContainerGap())
         );
 
         pack();
@@ -205,7 +216,7 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSelectEmployeeActionPerformed
 
     private void btnSelectRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectRoleActionPerformed
-        EmployeeCreateAccountFormController.btnSelectRoleActionPerformed(comboRoles, this);
+        EmployeeCreateAccountFormController.btnSelectRoleActionPerformed(listRoles, this);
     }//GEN-LAST:event_btnSelectRoleActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -221,14 +232,15 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSelectEmployee;
     private javax.swing.JButton btnSelectRole;
-    private javax.swing.JComboBox<Object> comboRoles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JList<Object> listRoles;
     private javax.swing.JTextField txtEmployeeSelected;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
@@ -238,9 +250,9 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
         EmployeeCreateAccountFormController.prepareView(this);
     }
 
-    private void populateComboRoles() {
-        EmployeeCreateAccountFormController.populateComboRoles(comboRoles);
-    }
+//    private void populateComboRoles() {
+//        EmployeeCreateAccountFormController.populateComboRoles(comboRoles);
+//    }
 
     private void setTableModel() {
         EmployeeCreateAccountFormController.setTableModel(jTable1);
@@ -254,12 +266,24 @@ public class EmployeeCreateAccountForm extends javax.swing.JDialog {
         this.employee = employee;
     }
 
-    public Role getRole() {
-        return role;
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    private void setListRoleModel() {
+        EmployeeCreateAccountFormController.setListRolesModel(listRoles);
     }
 
 }

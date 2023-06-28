@@ -113,7 +113,7 @@ public class ReceiptFormController {
         receiptForm.setPaymentMethodType(paymentMethodType);
     }
 
-    public static void btnConfirmPaymentActionPerformed(JButton btnConfirmPayment, JComboBox comboPaymentMethodType, ReceiptForm receiptForm, Receipt receipt, JTextArea txtAreaMessage, JTextField txtCardNumber) {
+    public static void btnConfirmPaymentActionPerformed(JButton btnSelectPayMethod, JButton btnConfirmCardNumber, JButton btnConfirmPayment, JComboBox comboPaymentMethodType, ReceiptForm receiptForm, Receipt receipt, JTextArea txtAreaMessage, JTextField txtCardNumber) {
         PaymentMethodType paymentMethodType = receiptForm.getPaymentMethodType();
         String cardNumber = null;
         boolean isValid = true;
@@ -134,6 +134,9 @@ public class ReceiptFormController {
                     try {
                         addPayment(payment);
                         freeTable(payment);
+                        btnConfirmPayment.setEnabled(false);
+                        btnSelectPayMethod.setEnabled(false);
+                        btnConfirmCardNumber.setEnabled(false);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -148,6 +151,9 @@ public class ReceiptFormController {
                 try {
                     addPayment(payment);
                     freeTable(payment);
+                    btnConfirmPayment.setEnabled(false);
+                    btnSelectPayMethod.setEnabled(false);
+                        btnConfirmCardNumber.setEnabled(false);
                 } catch (Exception ex) {
                     Logger.getLogger(ReceiptFormController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -156,7 +162,7 @@ public class ReceiptFormController {
             }
         }
 
-        btnConfirmPayment.setEnabled(false);
+        
     }
 
     public static Response addPayment(Payment payment) throws Exception {

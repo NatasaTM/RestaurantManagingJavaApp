@@ -8,8 +8,8 @@ import java.util.List;
  *
  * @author Natasa Todorov Markovic
  */
-public class User implements Serializable{
-    
+public class User implements Serializable {
+
     private String username;
     private String password;
     private Employee employee;
@@ -62,17 +62,29 @@ public class User implements Serializable{
     public String toString() {
         return "User{" + "username=" + username + ", password=" + password + ", employee=" + employee + ", roles=" + roles + '}';
     }
-    
+
     public int intRole() {
-        for (Role r: getRoles()){
-            if (r.getName().toUpperCase().equals("administrator".toUpperCase())) return 1;
-            if(r.getName().toUpperCase().equals("sef kuhinje".toUpperCase())) return 2;
-            if(r.getName().toUpperCase().equals("konobar".toUpperCase())) return 3;
-            if(r.getName().toUpperCase().equals("barmen".toUpperCase())) return 4;
+
+        for (Role r : getRoles()) {
+            if (r.getName().equalsIgnoreCase("administrator")) {
+                return 1;
+            }
         }
+
+        for (Role r : getRoles()) {
+            if (r.getName().equalsIgnoreCase("sef kuhinje")) {
+                return 2;
+            }
+            if (r.getName().equalsIgnoreCase("konobar")) {
+                return 3;
+            }
+            if (r.getName().equalsIgnoreCase("barmen")) {
+                return 4;
+            }
+        }
+
         return -1;
+
     }
-    
-    
-    
+
 }

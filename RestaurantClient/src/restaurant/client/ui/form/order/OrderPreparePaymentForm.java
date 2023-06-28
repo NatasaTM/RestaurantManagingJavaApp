@@ -79,6 +79,13 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
         btnUnpaiedReceipts = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Izaberi sto"));
 
@@ -428,6 +435,10 @@ public class OrderPreparePaymentForm extends javax.swing.JDialog {
     private void btnUnpaiedReceiptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnpaiedReceiptsActionPerformed
         OrderPreparePaymentFormController.btnUnpaiedReceiptsActionPerformed();
     }//GEN-LAST:event_btnUnpaiedReceiptsActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        OrderPreparePaymentFormController.setTextAreaTables(textAreaTables, this, btnSelectTable);
+    }//GEN-LAST:event_formWindowGainedFocus
     
     private void prepareView() {
         OrderPreparePaymentFormController.prepareView(textAreaTables, this, btnSubmit, tblOrder, btnAddAllOrders, btnAddOrder, tblPaymentOrder, btnDelete, btnDeleteAll);

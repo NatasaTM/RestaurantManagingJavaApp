@@ -102,8 +102,8 @@ public class OrderBartenderFormController {
 
         JTable tblOrder = orderBartenderForm.getTblOrder();
         int selectedRow = orderBartenderForm.getSelectedRowIndex();
-        CustomTableCellRenderer renderer = new CustomTableCellRenderer(selectedRow);
-        tblOrder.setDefaultRenderer(Object.class, renderer);
+        //CustomTableCellRenderer renderer = new CustomTableCellRenderer(selectedRow);
+        //tblOrder.setDefaultRenderer(Object.class, renderer);
 
         // Order order = orderChefsForm.getOrder();
         selectedRow = tblOrder.getSelectedRow();

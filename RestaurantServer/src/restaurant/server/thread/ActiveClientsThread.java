@@ -2,7 +2,6 @@ package restaurant.server.thread;
 
 import java.util.List;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
 import restaurant.server.session.Session;
 import restaurant.server.ui.ClientsTableModel.ClientsTableModel;
 
@@ -28,7 +27,7 @@ public class ActiveClientsThread extends Thread{
                 List<ProcessClientRequests> clients = Session.getInstance().getClients();
                 clientsTableModel.updateTable(clients);
                 
-              //  tblClients.setModel(new ClientsTableModel(clients));
+              
                 Thread.sleep(100);
             }
         } catch (InterruptedException ex) {

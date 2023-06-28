@@ -10,15 +10,15 @@ import restaurant.common.domain.City;
 import restaurant.common.domain.Employee;
 import restaurant.common.domain.Role;
 import restaurant.common.domain.User;
-import restaurant.server.repository.GenericRepository;
 import restaurant.server.connection.MyDatabaseConnection;
 import java.sql.*;
+import restaurant.server.repository.UserRepository;
 
 /**
  *
  * @author Natasa Todorov Markovic
  */
-public class UserRepositoryImpl implements GenericRepository<User, String> {
+public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findByQuery(String query) throws Exception {
@@ -155,11 +155,11 @@ public class UserRepositoryImpl implements GenericRepository<User, String> {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String usernameRs = rs.getString("username");
                 String password = rs.getString("password");
                 Integer employeeId = rs.getInt("employeeId");
-                
+
                 Employee employee = new Employee(employeeId);
                 List<Role> roles = getRoles(usernameRs);
                 user = new User(usernameRs, password, employee, roles);
@@ -167,7 +167,7 @@ public class UserRepositoryImpl implements GenericRepository<User, String> {
             rs.close();
             preparedStatement.close();
             return user;
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Greska u izvrsenju metode findById() klase UserRepository ->" + e.getMessage());
@@ -216,6 +216,34 @@ public class UserRepositoryImpl implements GenericRepository<User, String> {
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Greska u izvrsenju metode addUserRole() klase UserRepository ->" + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<User> findByEmailAndPassword(String username, String password) throws Exception {
+        try {
+            List<User> users = new ArrayList<>();
+            String query = "select `username`,`password`,`employeeId` from `user` where BINARY `username`=? and BINARY `password`=?";
+            Connection connection = MyDatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                String usernameRS = rs.getString("username");
+                String passwordRS = rs.getString("password");
+                Integer id = rs.getInt("employeeId");
+                Employee employee = new Employee(id);
+                User user = new User(usernameRS, passwordRS, employee, null);
+                users.add(user);
+
+            }
+            rs.close();
+            preparedStatement.close();
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Greska u izvrsenju metode findByEmailAndPassword() klase UserRepository ->" + e.getMessage());
         }
     }
 

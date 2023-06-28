@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import restaurant.server.admin.Admin;
 import restaurant.server.communication.Server;
 import restaurant.server.connection.MyDatabaseConnection;
 import restaurant.server.session.Session;
@@ -12,6 +13,7 @@ import restaurant.server.thread.ActiveClientsThread;
 import restaurant.server.thread.ProcessClientRequests;
 import restaurant.server.ui.ClientsTableModel.ClientsTableModel;
 import restaurant.server.ui.form.about.ServerAboutForm;
+import restaurant.server.ui.form.add.AdminAddForm;
 import restaurant.server.ui.form.info.ServerInfoDialog;
 
 /**
@@ -19,17 +21,21 @@ import restaurant.server.ui.form.info.ServerInfoDialog;
  * @author Natasa Todorov Markovic
  */
 public class MainForm extends javax.swing.JFrame {
+
     private Server server;
     private ActiveClientsThread activeClients;
-   
+    private Admin admin;
+
     private final ClientsTableModel model;
+
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public MainForm(Admin admin) {
         initComponents();
         setLocationRelativeTo(null);
-         model = new ClientsTableModel(new ArrayList<>());
+        this.admin = admin;
+        model = new ClientsTableModel(new ArrayList<>());
         tblClients.setModel(model);
         prepareForm();
     }
@@ -48,9 +54,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClients = new javax.swing.JTable();
+        lblAdmin = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuServer = new javax.swing.JMenu();
         menuItemInfo = new javax.swing.JMenuItem();
+        menuItemRegister = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         menuItemAbout = new javax.swing.JMenuItem();
 
@@ -90,6 +98,8 @@ public class MainForm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblClients);
 
+        lblAdmin.setText("jLabel2");
+
         menuServer.setText("Server");
 
         menuItemInfo.setText("Info");
@@ -99,6 +109,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         menuServer.add(menuItemInfo);
+
+        menuItemRegister.setText("Register new admin");
+        menuItemRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRegisterActionPerformed(evt);
+            }
+        });
+        menuServer.add(menuItemRegister);
 
         jMenuBar1.add(menuServer);
 
@@ -123,6 +141,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,13 +150,15 @@ public class MainForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnStopServer)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
+                    .addComponent(lblAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
+                .addComponent(lblAdmin)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnStartServer)
                     .addComponent(btnStopServer))
@@ -164,7 +185,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStartServerActionPerformed
 
     private void btnStopServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopServerActionPerformed
-       if (server != null && server.isAlive()) {
+        if (server != null && server.isAlive()) {
             server.stopServer();
             setTitle("Server stopped");
             activeClients.interrupt();
@@ -183,17 +204,20 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void menuItemInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInfoActionPerformed
-       new ServerInfoDialog(this, true).setVisible(true);
+        new ServerInfoDialog(this, true).setVisible(true);
     }//GEN-LAST:event_menuItemInfoActionPerformed
 
     private void menuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAboutActionPerformed
         new ServerAboutForm(this, true).setVisible(true);
     }//GEN-LAST:event_menuItemAboutActionPerformed
 
+    private void menuItemRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRegisterActionPerformed
+        new AdminAddForm(this, true).setVisible(true);
+    }//GEN-LAST:event_menuItemRegisterActionPerformed
+
     /**
      * @param args the command line arguments
      */
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartServer;
@@ -201,18 +225,22 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAdmin;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAbout;
     private javax.swing.JMenuItem menuItemInfo;
+    private javax.swing.JMenuItem menuItemRegister;
     private javax.swing.JMenu menuServer;
     private javax.swing.JTable tblClients;
     // End of variables declaration//GEN-END:variables
 
     private void prepareForm() {
-         List<ProcessClientRequests> clients = Session.getInstance().getClients();
+        List<ProcessClientRequests> clients = Session.getInstance().getClients();
         model.updateTable(clients);
+        lblAdmin.setText("Ulogovani ste kao: "+admin.getFirstname()+" "+admin.getLastname());
     }
-     public JTable getTblClients() {
+
+    public JTable getTblClients() {
         return tblClients;
     }
 }

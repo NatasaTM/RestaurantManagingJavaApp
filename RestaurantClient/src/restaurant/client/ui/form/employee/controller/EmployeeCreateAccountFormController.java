@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -38,6 +40,21 @@ public class EmployeeCreateAccountFormController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    public static void setListRolesModel(JList listRoles){
+        try {
+            List<Role> roles = getAllRoles();
+            DefaultListModel<Role> listModel = new DefaultListModel<>();
+        for (Role role : roles) {
+            listModel.addElement(role);
+        }
+        listRoles.setModel(listModel);
+
+        
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeCreateAccountFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     public static List<Employee> getAllEmployees() throws Exception {
@@ -102,20 +119,22 @@ public class EmployeeCreateAccountFormController {
         }        
     }
     
-    public static void btnSelectRoleActionPerformed(JComboBox comboRoles, EmployeeCreateAccountForm employeeCreateAccountForm) {
-        Role role = (Role) comboRoles.getSelectedItem();
-        employeeCreateAccountForm.setRole(role);
+    public static void btnSelectRoleActionPerformed(JList roles, EmployeeCreateAccountForm employeeCreateAccountForm) {
+       List<Role> selectedRoles = roles.getSelectedValuesList();
+        
+//Role role = (Role) comboRoles.getSelectedItem();
+        employeeCreateAccountForm.setRoles(selectedRoles);
     }
     
     public static void btnSaveActionPerformed(JTextField txtUsername,JTextField txtPassword,EmployeeCreateAccountForm employeeCreateAccountForm,JTextField txtEmployeeSelected){
         String userName = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        Role role = employeeCreateAccountForm.getRole();
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
+        List<Role> roles = employeeCreateAccountForm.getRoles();
+        //List<Role> roles = new ArrayList<>();
+        //roles.add(role);
         Employee employee = employeeCreateAccountForm.getEmployee();
         boolean isValid = true;
-        if(userName.isEmpty() || password.isEmpty() || role==null){
+        if(userName.isEmpty() || password.isEmpty() || roles==null || roles.isEmpty()){
             JOptionPane.showMessageDialog(null, "Morate uneti sve podatke!");
             isValid=false;
         }
@@ -126,7 +145,7 @@ public class EmployeeCreateAccountFormController {
                 addUserProfile(user);
                 JOptionPane.showMessageDialog(null, "Nalog za zaposlenog je uspesno kreiran");
                 employeeCreateAccountForm.setEmployee(null);
-                employeeCreateAccountForm.setRole(null);
+                employeeCreateAccountForm.setRoles(null);
                 txtUsername.setText("");
                 txtPassword.setText("");
                 txtEmployeeSelected.setText("");

@@ -1,8 +1,6 @@
 package restaurant.server.util;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -11,7 +9,7 @@ import java.util.Properties;
  */
 public class DbUtil {
     
-    private Properties properties;
+    private final Properties properties;
 
     public DbUtil() throws Exception {
         properties=new Properties();

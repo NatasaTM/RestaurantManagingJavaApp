@@ -15,7 +15,7 @@ import restaurant.server.connection.MyDatabaseConnection;
  *
  * @author Natasa Todorov Markovic
  */
-public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Integer>{
+public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Integer> {
 
     @Override
     public List<OrderItem> getAll() throws Exception {
@@ -36,7 +36,7 @@ public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Int
             preparedStatement.setBoolean(1, orderItem.getIsReady());
             preparedStatement.setInt(2, orderItem.getOrderItemId());
             preparedStatement.executeUpdate();
-            
+
             preparedStatement.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,8 +49,6 @@ public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Int
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
-
     @Override
     public List<OrderItem> findByQuery(String query) throws Exception {
         try {
@@ -62,32 +60,31 @@ public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Int
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-               Integer orderItemsId = rs.getInt("orderItemsId");
-               
-               Integer menuItemId = rs.getInt("menuItemId");
-               int quantity = rs.getInt("quantity");
-               Boolean orderItemReadyStatus = rs.getBoolean("orderItemReadyStatus");
-               String menuItemName = rs.getString("name");
-               String description = rs.getString("description");
+            while (rs.next()) {
+                Integer orderItemsId = rs.getInt("orderItemsId");
+
+                Integer menuItemId = rs.getInt("menuItemId");
+                int quantity = rs.getInt("quantity");
+                Boolean orderItemReadyStatus = rs.getBoolean("orderItemReadyStatus");
+                String menuItemName = rs.getString("name");
+                String description = rs.getString("description");
                 BigDecimal price = rs.getBigDecimal("price");
                 MenuItemType menuItemType = Enum.valueOf(MenuItemType.class, rs.getObject("menuItemType").toString());
-                
+
                 String categoryName = rs.getString("categoryName");
                 Integer categoryId = rs.getInt("categoryId");
-                               
+
                 MenuCategory menuCategory = new MenuCategory(categoryId, categoryName);
-                
+
                 MenuItem menuItem = new MenuItem(menuItemId, menuItemName, description, price, menuCategory, menuItemType);
-                
+
                 OrderItem orderItem = new OrderItem(orderItemsId, menuItem, quantity, orderItemReadyStatus);
                 orderItems.add(orderItem);
             }
             rs.close();
             statement.close();
             return orderItems;
-          
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Greska u izvodjenju metode findByQuery() klase OrderItemRepositoryImpl" + e.getMessage());
@@ -96,20 +93,20 @@ public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Int
 
     @Override
     public OrderItem findById(Integer id) throws Exception {
-         try {
-             OrderItem orderItem = null;
+        try {
+            OrderItem orderItem = null;
             String query = "SELECT `orderItemsId`,`menuItemId`,`quantity`,`orderItemReadyStatus` FROM `orderitems` WHERE `orderItemsId`=?";
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Integer orderItemsId = rs.getInt("orderItemsId");
                 Integer menuItemId = rs.getInt("menuItemId");
                 int quantity = rs.getInt("quantity");
                 Boolean orderItemReadyStatus = rs.getBoolean("orderItemReadyStatus");
-                
+
                 MenuItem menuItem = new MenuItem();
                 menuItem.setId(menuItemId);
                 orderItem = new OrderItem(orderItemsId, menuItem, quantity, orderItemReadyStatus);
@@ -122,5 +119,5 @@ public class OrderItemRepositoryImpl implements GenericRepository<OrderItem, Int
             throw new Exception("Greska u izvodjenju metode findById() klase OrderItemRepositoryImpl" + e.getMessage());
         }
     }
-    
+
 }

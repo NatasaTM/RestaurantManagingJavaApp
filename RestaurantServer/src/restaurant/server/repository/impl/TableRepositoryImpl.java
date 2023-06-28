@@ -86,34 +86,9 @@ public class TableRepositoryImpl implements GenericRepository<Table, Integer> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Greska pri izvrsenju metode update() klase TableRepository"+e.getMessage());
+            throw new Exception("Greska pri izvrsenju metode update() klase TableRepository" + e.getMessage());
         }
     }
-
-//    @Override
-//    public List<Table> isAvailable() throws Exception {
-//        String query = "SELECT `tableId`,`numberOfSeats`,`isAvailable` FROM `table` WHERE `isAvailable`=1";
-//        List<Table> tables = new ArrayList<>();
-//        try {
-//            Connection connection = MyDatabaseConnection.getInstance().getConnection();
-//            Statement statement = connection.createStatement();
-//            ResultSet rs = statement.executeQuery(query);
-//            while (rs.next()) {
-//                Integer id = rs.getInt("tableId");
-//                Integer numberOfSeats = rs.getInt("numberOfSeats");
-//                Boolean isAvailable = rs.getBoolean("isAvailable");
-//                Table table = new Table(id, numberOfSeats, true);
-//                tables.add(table);
-//            }
-//            rs.close();
-//            statement.close();
-//            return tables;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new Exception("Greska pri izvrsenju metode isAvailable() klase TableRepository");
-//        }
-//    }
 
     @Override
     public Table findById(Integer id) throws Exception {
@@ -135,23 +110,6 @@ public class TableRepositoryImpl implements GenericRepository<Table, Integer> {
 
     }
 
-//    @Override
-//    public void setIsAvailable(Table table, boolean isAvailable) throws Exception {
-//        String query = "UPDATE `table` SET `isAvailable`=? WHERE `tableId`=?";
-//        try {
-//            Connection connection = MyDatabaseConnection.getInstance().getConnection();
-//            PreparedStatement preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setBoolean(1, isAvailable);
-//            preparedStatement.setInt(2, table.getTableNumber());
-//            preparedStatement.executeUpdate();
-//            preparedStatement.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new Exception("Greska pri izvrsenju metode setIsAvailable() klase TableRepository");
-//        }
-//    }
-
     @Override
     public List<Table> findByQuery(String query) throws Exception {
         List<Table> tables = new ArrayList<>();
@@ -159,12 +117,12 @@ public class TableRepositoryImpl implements GenericRepository<Table, Integer> {
             Connection connection = MyDatabaseConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()){
-               Integer id = rs.getInt("tableId");
+            while (rs.next()) {
+                Integer id = rs.getInt("tableId");
                 Integer numberOfSeats = rs.getInt("numberOfSeats");
                 Boolean isAvailable = rs.getBoolean("isAvailable");
                 Table table = new Table(id, numberOfSeats, isAvailable);
-                tables.add(table); 
+                tables.add(table);
             }
             rs.close();
             preparedStatement.close();

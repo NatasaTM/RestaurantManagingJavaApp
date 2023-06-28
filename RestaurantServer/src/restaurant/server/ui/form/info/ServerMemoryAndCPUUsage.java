@@ -9,8 +9,8 @@ import java.text.NumberFormat;
  * @author Natasa Todorov Markovic
  */
 public class ServerMemoryAndCPUUsage {
-    
-    public static String getMemoryUsage(){
+
+    public static String getMemoryUsage() {
         Runtime runtime = Runtime.getRuntime();
 
         // Get memory usage information
@@ -25,18 +25,12 @@ public class ServerMemoryAndCPUUsage {
         String formattedFreeMemory = format.format(freeMemory / 1024);
         String formattedTotalFreeMemory = format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024);
 
-//        // Display the memory usage information
-//        System.out.println("Max Memory: " + formattedMaxMemory + " KB");
-//        System.out.println("Allocated Memory: " + formattedAllocatedMemory + " KB");
-//        System.out.println("Free Memory: " + formattedFreeMemory + " KB");
-//        System.out.println("Total Free Memory: " + formattedTotalFreeMemory + " KB");
-        
-        String memoryInfo = "Max Memory: " + formattedMaxMemory+" KB\n"+"Allocated Memory: " +formattedAllocatedMemory+" KB\n" +"Free Memory: " + formattedFreeMemory+" KB\n" +"Total Free Memory: " + formattedTotalFreeMemory + " KB";
+        String memoryInfo = "Max Memory: " + formattedMaxMemory + " KB\n" + "Allocated Memory: " + formattedAllocatedMemory + " KB\n" + "Free Memory: " + formattedFreeMemory + " KB\n" + "Total Free Memory: " + formattedTotalFreeMemory + " KB";
         return memoryInfo;
     }
-    public static String getCPUUsage(){
+
+    public static String getCPUUsage() {
         OperatingSystemMXBean osMxBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-       
 
         // Get the CPU usage as a percentage
         double cpuUsage = osMxBean.getProcessCpuLoad() * 100;

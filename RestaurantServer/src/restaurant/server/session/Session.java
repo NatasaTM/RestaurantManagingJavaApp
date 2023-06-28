@@ -2,6 +2,7 @@ package restaurant.server.session;
 
 import java.util.ArrayList;
 import java.util.List;
+import restaurant.common.domain.User;
 import restaurant.server.thread.ProcessClientRequests;
 
 /**
@@ -35,6 +36,13 @@ public class Session {
         clients.remove(client);
           
     }
-
+    public synchronized boolean isClientLoggedIn(User user){
+        for (ProcessClientRequests client : clients) {
+            if(client.getClientUsername().equals(user.getUsername())){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

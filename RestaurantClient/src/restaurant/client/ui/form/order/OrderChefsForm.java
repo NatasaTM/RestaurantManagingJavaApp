@@ -6,8 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import restaurant.client.ui.form.order.controller.OrderChefsFormController;
+import restaurant.client.ui.form.order.thread.OrderChefRefreshThread;
 import restaurant.common.domain.Order;
 
 /**
@@ -17,9 +17,9 @@ import restaurant.common.domain.Order;
 public class OrderChefsForm extends javax.swing.JDialog {
 
     private List<Order> orders;
-    private Timer refreshTimer;
     private Order order;
     private int selectedRowIndex = -1;
+    private OrderChefRefreshThread orderChefRefreshThread;
 
     /**
      * Creates new form OrderChefsForm
@@ -29,25 +29,17 @@ public class OrderChefsForm extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         orders = new ArrayList<>();
+
         prepareView();
-        setOrderTableModel();
-        tblOrder.getSelectionModel().addListSelectionListener(e -> {
-        selectedRowIndex = tblOrder.getSelectedRow();
-        // highlight selected row
-        tblOrder.repaint();
-    });
-       // pnlOrderItems.setVisible(false);
+        // setOrderTableModel();
+//        tblOrder.getSelectionModel().addListSelectionListener(e -> {
+//        selectedRowIndex = tblOrder.getSelectedRow();
+//        // highlight selected row
+//        tblOrder.repaint();
+//    });
 
-        refreshTimer = new Timer(1000, e -> {
-
-            setOrderTableModel();
-            // re-highlight selected row
-        if (selectedRowIndex >= 0) {
-            tblOrder.repaint(tblOrder.getCellRect(selectedRowIndex, 0, true));
-        }
-
-        });
-        refreshTimer.start();
+        orderChefRefreshThread = new OrderChefRefreshThread(this);
+        orderChefRefreshThread.start();
 
     }
 
@@ -69,6 +61,11 @@ public class OrderChefsForm extends javax.swing.JDialog {
         btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Aktivne porudzbine"));
 
@@ -199,12 +196,16 @@ public class OrderChefsForm extends javax.swing.JDialog {
         OrderChefsFormController.tblOrderItemsMouseClicked(this);
     }//GEN-LAST:event_tblOrderItemsMouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        orderChefRefreshThread.stopThread();
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
-    public Timer getRefreshTimer() {
-        return refreshTimer;
-    }
+//    public Timer getRefreshTimer() {
+//        return refreshTimer;
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUpdate;
@@ -216,7 +217,7 @@ public class OrderChefsForm extends javax.swing.JDialog {
     private javax.swing.JTable tblOrderItems;
     // End of variables declaration//GEN-END:variables
 
-    private void setOrderTableModel() {
+    public void setOrderTableModel() {
         OrderChefsFormController.setTableModel(orders, tblOrder);
     }
 
@@ -261,6 +262,5 @@ public class OrderChefsForm extends javax.swing.JDialog {
     private void prepareView() {
         OrderChefsFormController.prepareView(this, this);
     }
-    
 
 }

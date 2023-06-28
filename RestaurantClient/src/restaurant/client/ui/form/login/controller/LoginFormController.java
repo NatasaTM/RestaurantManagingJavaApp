@@ -37,7 +37,10 @@ public class LoginFormController {
             System.out.println("Roles:");
             List<Role> roles = user.getRoles();
             ApplicationSession.getInstance().setLoginUser(user);
-            new MainForm().setVisible(true);
+           // new MainForm().setVisible(true);
+           MainForm form = new MainForm();
+           form.setVisible(true);
+           form.setExtendedState(JFrame.MAXIMIZED_BOTH);
             loginForm.dispose();
             
         } catch (Exception e) {

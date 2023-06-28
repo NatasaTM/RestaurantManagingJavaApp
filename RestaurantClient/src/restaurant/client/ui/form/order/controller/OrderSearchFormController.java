@@ -123,11 +123,13 @@ public class OrderSearchFormController {
 
     }
 
-    public static void btnDateSelectActionPerformed(List<Order> orders, JTable tblOrders, OrderSearchForm orderSearchForm, JDateChooser dateChooser, JRadioButton rbtnNonPaied, JRadioButton rbtnPaied, JComboBox comboEmployee) {
+    public static void btnDateSelectActionPerformed(JList listOrderItems, List<Order> orders, JTable tblOrders, OrderSearchForm orderSearchForm, JDateChooser dateChooser, JRadioButton rbtnNonPaied, JRadioButton rbtnPaied, JComboBox comboEmployee) {
         if (dateChooser.getDate() != null) {
             Date d = dateChooser.getDate();
             LocalDate date = d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             orderSearchForm.setDate(date);
+            List<OrderItem> oitems = new ArrayList<>();
+            setListModel(oitems, listOrderItems);
             try {
                 orders = findByCondition(date, orderSearchForm.getStatusReady(), orderSearchForm.getStatusPaied(), orderSearchForm.getEmployee(), orderSearchForm.getTable());
                 setTableModel(orders, tblOrders);
@@ -165,7 +167,7 @@ public class OrderSearchFormController {
         }
     }
 
-    public static void btnClearAllActionPerformed(JTable tblOrders, OrderSearchForm orderSearchForm, JComboBox comboEmployee, JComboBox comboTable, ButtonGroup groupPaied, ButtonGroup groupReady, JDateChooser dateChooser) {
+    public static void btnClearAllActionPerformed(JList listOrderItems, JTable tblOrders, OrderSearchForm orderSearchForm, JComboBox comboEmployee, JComboBox comboTable, ButtonGroup groupPaied, ButtonGroup groupReady, JDateChooser dateChooser) {
         comboEmployee.setSelectedIndex(0);
         comboTable.setSelectedIndex(0);
         groupPaied.clearSelection();
@@ -176,6 +178,8 @@ public class OrderSearchFormController {
         orderSearchForm.setTable(null);
         orderSearchForm.setStatusPaied(null);
         orderSearchForm.setStatusReady(null);
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
         try {
 
             orderSearchForm.setOrders(getAllOrders());
@@ -197,9 +201,11 @@ public class OrderSearchFormController {
         }
     }
 
-    public static void btnReadyClearActionPerformed(OrderSearchForm orderSearchForm, ButtonGroup groupReady, JTable tblOrders) {
+    public static void btnReadyClearActionPerformed(JList listOrderItems, OrderSearchForm orderSearchForm, ButtonGroup groupReady, JTable tblOrders) {
         orderSearchForm.setStatusReady(null);
         groupReady.clearSelection();
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
         try {
             orderSearchForm.setOrders(findByCondition(orderSearchForm.getDate(), orderSearchForm.getStatusReady(), orderSearchForm.getStatusPaied(), orderSearchForm.getEmployee(), orderSearchForm.getTable()));
             setTableModel(orderSearchForm.getOrders(), tblOrders);
@@ -209,9 +215,11 @@ public class OrderSearchFormController {
         }
     }
 
-    public static void btnReadySelectActionPerformed(JRadioButton rbtnReady, OrderSearchForm orderSearchForm, JTable tblOrders, JRadioButton rbtnNonReady) {
+    public static void btnReadySelectActionPerformed(JList listOrderItems, JRadioButton rbtnReady, OrderSearchForm orderSearchForm, JTable tblOrders, JRadioButton rbtnNonReady) {
         if (rbtnReady.isSelected()) {
             orderSearchForm.setStatusReady(true);
+            List<OrderItem> oitems = new ArrayList<>();
+            setListModel(oitems, listOrderItems);
             try {
                 orderSearchForm.setOrders(findByCondition(orderSearchForm.getDate(), orderSearchForm.getStatusReady(), orderSearchForm.getStatusPaied(), orderSearchForm.getEmployee(), orderSearchForm.getTable()));
                 setTableModel(orderSearchForm.getOrders(), tblOrders);
@@ -231,11 +239,13 @@ public class OrderSearchFormController {
         }
     }
 
-    public static void btnPaiedClearActionPerformed(OrderSearchForm orderSearchForm, JRadioButton rbtnPaied, JRadioButton rbtnNonPaied, ButtonGroup groupPaied, JTable tblOrders) {
+    public static void btnPaiedClearActionPerformed(JList listOrderItems, OrderSearchForm orderSearchForm, JRadioButton rbtnPaied, JRadioButton rbtnNonPaied, ButtonGroup groupPaied, JTable tblOrders) {
         orderSearchForm.setStatusPaied(null);
         rbtnPaied.setSelected(false);
         rbtnNonPaied.setSelected(false);
         groupPaied.clearSelection();
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
         try {
             orderSearchForm.setOrders(findByCondition(orderSearchForm.getDate(), orderSearchForm.getStatusReady(), orderSearchForm.getStatusPaied(), orderSearchForm.getEmployee(), orderSearchForm.getTable()));
             setTableModel(orderSearchForm.getOrders(), tblOrders);
@@ -244,7 +254,7 @@ public class OrderSearchFormController {
         }
     }
 
-    public static void btnPaiedSelectActionPerformed(OrderSearchForm orderSearchForm, JRadioButton rbtnPaied, JTable tblOrders, JRadioButton rbtnNonPaied) {
+    public static void btnPaiedSelectActionPerformed(JList listOrderItems, OrderSearchForm orderSearchForm, JRadioButton rbtnPaied, JTable tblOrders, JRadioButton rbtnNonPaied) {
         if (rbtnPaied.isSelected()) {
             orderSearchForm.setStatusPaied(true);
             try {
@@ -266,9 +276,11 @@ public class OrderSearchFormController {
                 Logger.getLogger(OrderSearchForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
     }
 
-    public static void btnSelectEmployeeActionPerformed(OrderSearchForm orderSearchForm, JComboBox comboEmployee, JTable tblOrders) {
+    public static void btnSelectEmployeeActionPerformed(JList listOrderItems, OrderSearchForm orderSearchForm, JComboBox comboEmployee, JTable tblOrders) {
         if (comboEmployee.getSelectedItem().equals("Svi zaposleni")) {
             orderSearchForm.setEmployee(null);
 
@@ -292,9 +304,11 @@ public class OrderSearchFormController {
                 Logger.getLogger(OrderSearchForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
     }
 
-    public static void btnSelectTableActionPerformed(OrderSearchForm orderSearchForm, JComboBox comboTable, JTable tblOrders) {
+    public static void btnSelectTableActionPerformed(JList listOrderItems, OrderSearchForm orderSearchForm, JComboBox comboTable, JTable tblOrders) {
         if (comboTable.getSelectedItem().equals("Svi stolovi")) {
             orderSearchForm.setTable(null);
             try {
@@ -315,6 +329,8 @@ public class OrderSearchFormController {
                 ex.printStackTrace();
             }
         }
+        List<OrderItem> oitems = new ArrayList<>();
+        setListModel(oitems, listOrderItems);
     }
 
     public static void tblOrdersMouseClicked(JTable tblOrders, JList listOrderItems) {
